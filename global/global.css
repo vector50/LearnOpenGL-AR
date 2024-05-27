@@ -1,0 +1,253 @@
+body
+{
+    display:inline-block;
+    direction: rtl;
+    font-family: Gudea, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    background-color: #eee;
+    color: black;
+}
+
+button
+{
+    cursor: pointer;
+}
+
+a:link    {color: rgb(75, 129, 147);}
+a:visited {color: rgb(75, 129, 147);}
+a:hover   {color: rgb(75, 129, 147);}
+a:active  {color: rgb(75, 129, 147);}
+
+header
+{
+    background-color: #7b7b7b;
+    position: fixed;
+    display: inline;
+    width: 100%;
+    padding-bottom: 3px;
+    margin: auto;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.pageChooseButton
+{
+    display: inline;
+    padding-bottom: 2px;
+    padding-top: 4px;
+    font-size: 15px;
+    border-color: transparent;
+    border-style: solid;
+    margin-top: 3px;
+    margin-inline: 3px;
+    height: 35px;
+    width: fit-content;
+    color: black;
+    background-color: #eee;
+    border-radius: 24px;
+}
+
+underHeader
+{
+    background-color: transparent;
+    position: fixed;
+    display: none;
+    margin-top: 40px;
+    width: 100%;
+    padding-bottom: 3px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.secondaryPageChooseButton
+{
+    display: inline;
+    padding-bottom: 2px;
+    padding-top: 4px;
+    font-size: 15px;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 2px;
+    margin-top: 3px;
+    margin-inline: 3px;
+    height: 30px;
+    width: fit-content;
+    color: black;
+    background-color: #a5a5a5;
+    border-radius: 24px;
+}
+
+.mainDiv
+{
+    width: 85%;
+    max-width: 90vw;
+    margin-inline: auto;
+    margin-top: 4%;
+    padding: 10px;
+}
+@media screen and (max-width: 500px) and (min-width: 50px) { .mainDiv { margin-top: 13%; }}
+
+.mainHead
+{
+    font-size: 30px;
+    font-weight: bold;
+    display: block;
+    color: #303236;
+}
+
+.secondaryHead
+{
+    color: #334267;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: -10px;
+    display: block;
+}
+
+.thirdHead
+{
+    color: #7a3a3d;
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: -10px;
+    display: block;
+}
+
+.paragraph
+{
+    font-size: 17px;
+    font-weight: normal;
+}
+
+footer
+{
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+.nextPageButton
+{
+    padding-bottom: 2px;
+    padding-top: 4px;
+    font-size: 20px;
+    font-weight:500;
+    border-color: transparent;
+    height: 30px;
+    width: fit-content;
+    color: white;
+    background-color: #00768b;
+    border-radius: 24px;
+}
+
+note
+{
+    display: block;
+    margin: 20px;
+    padding: 15px;
+    background-color: #D8F5D8;
+    color: #444;
+    border-radius: 5px;
+    border: 2px solid #AFDFAF;
+}
+
+warning
+{
+    display: block;
+    margin: 20px;
+    padding: 15px;
+    background-color: #FFD2D2;
+    color: #444;
+    border-radius: 5px;
+    border: 2px solid #E0B3B3;
+}
+
+function
+{
+    cursor: pointer;
+    border-bottom: 1px solid #c1c1c1;
+    font-family: "Courier New", Courier, monospace;
+    color: red;
+}
+
+dialog
+{
+    position: fixed;
+    top: 10%;
+    border-radius: 15px;
+    background-color: #eee;
+    border-color: cadetblue;
+    color: black;
+    align-items: center;
+    max-width: 60%;
+}
+
+.dialogFunctionName
+{
+    direction: ltr;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: left;
+    font-family: "Courier New", Courier, monospace;
+    color: red;
+}
+
+.dialogExplain
+{
+    font-size: 17px;
+    font-weight: normal;
+    text-align: right;
+}
+
+.dialogParamExplain
+{
+    font-size: 17px;
+    font-weight: normal;
+    text-align: right;
+}
+
+.dialogParam
+{
+    font-size: 17px;
+    font-weight: normal;
+    text-align: right;
+}
+
+.dialogExampleUsageParagraph
+{
+    font-size: 17px;
+    font-weight: normal;
+    text-align: right;
+}
+
+.dialogExampleUsage
+{
+    font-size: 17px;
+    font-weight: normal;
+    text-align: left;
+}
+
+def
+{
+    color: green;
+}
+
+fun
+{
+    color: red;
+}
+
+var
+{
+    color: blue;
+}
+
+img {
+    display: block;
+    border-radius: 7px;
+    border: 3px solid #bbb;
+    
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}

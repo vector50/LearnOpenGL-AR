@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../global/icon.ico">
+    <title>LearnOpenGL</title>
+    <link rel="stylesheet" href="../../global/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/vs2015.min.css">
+</head>
+
+<body>
+    <header>
+        <button class="pageChooseButton" onclick="newTab('github.com/JoeyDeVries/LearnOpenGL')">GitHub</button>
+        <button class="pageChooseButton" onclick="switchBg()"><strong>تغيير الخلفية</strong></button>
+        <button class="pageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/land')"><strong>الصفحة الرئيسية</strong></button>
+        <button class="pageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/intro')"><strong>المقدمة</strong></button>
+        <button class="pageChooseButton" style="border-color: rgb(100, 184, 187);" id="button-gettingStarted" onclick="openCloseMenu('gettingStarted')"><strong>البداية</strong></button>
+    </header>
+    <underHeader id="underHeader-gettingStarted" style="display: inline;">
+        <button class="secondaryPageChooseButton" style="border-color: rgb(100, 184, 187);" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/opengl')">OpenGL</button>
+        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/hello-window')">النافذة الترحيبية</button>
+    </underHeader>
+
+    <div class="mainDiv">
+        <h1 class="mainHead">OpenGL</h1>
+        <p class="paragraph">
+            قبل البداية برحلتنا يجب علينا اولا تعريف ماهو OpenGL .OpenGL يعتبر بشكل اساسي API (واجهة برمجة تطبيقات) توفر لنا مجموعة كبيرة من الfunctions التي نستطيع استعمالها للتلاعب بالغرافيكس و الصور. OpenGL مطور و مدار بواسطة <a href="https://www.khronos.org/opengl/" target="_blank">Khronos Group</a>.
+        </p>
+        <img src="../../global/media/getting-started/opengl.jpg" alt="صورة لشعار OpenGL">
+        <p class="paragraph">
+            OpenGL يحدد بالضبط كيف يكون ناتج كل function و كيف يعمل. بعدها الامر متروك للمطورين لايجاد حل عن كيفية استعمال هذا الfunction. بما ان OpenGL لا يعطينا تفاصيل التنفيذ، اصدارات OpenGL تستطيع ان يكون لها طرق تنفيذ مختلفة، طالما نتائجها تتوافق مع تخصيص OpenGL (و هكذا تكون نفسها لكل مستخدم).
+            <br><br>
+            الاشخاص الذين يطورون مكاتب OpenGL هم عادة صناع كرت الشاشة. كل كرت شاشة تشتريه يدعم اصدارات معينة لOpenGL و هي اصدارات OpenGL المطورة خصيصا لهذا الكرت (سلسلة كروت). عند استعمال احد انظمة Apple مكتبة OpenGL مدارة بواسطة Apple نفسها و لLinux توجد مجموعة من اصدارات صناع كروت الشاشة و تعديلات لهذه المكاتب بواسطة هواة. و هذا يعني ايضا انه عندما يُظهر OpenGL تصرف غريب من المفترض ان لا يحصل، فهو على الاغلب خطا صناع كرت الشاشة (او من طور\ادار المكتبة).
+        </p>
+        <note><p class="paragraph">بما ان اغلب التطبيقات لOpenGL مبنية بواسطة صناع كرت الشاشة، عند وجود خلل في التطبيق عادة يحل هذا بتحديث برنامج تشغيل (driver) كرت الشاشة؛ برامج التشغيل هذه تحتوي على احدث اصدارات OpenGL التي يدعمها كرت الشاشة الخاص بك. هذا احد الاسباب بأنه دائما ينصح بتحديث برامج تشغيل الغرافيكس بشكل دوري.</p></note>
+        <p class="paragraph">Khronos تنشر كل وثائق التخصيص لكل اصدارات OpenGL. القارئ المهتم يستطيع ايجاد تخصيصات OpenGL للاصدار 3.3 (الذي سوف نستعمله) <a href="https://registry.khronos.org/OpenGL/specs/gl/glspec33.core.pdf" target="_blank">هنا</a> و هي قراءة جيدة اذا كنت تريد ان تتعمق في تفاصيل OpenGL (لاحظ كيف غالبا يشرحون النتائج فقط و ليس التطبيقات). التخصيصات ايضا توفر مرجعا جيدا لايجاد عمل الfunctions <strong>بالضبط</strong>.</p>
+
+        <h2 class="secondaryHead">العمل الاساسي ضد الطور المباشر</h2>
+        <p class="paragraph">
+            سابقا، استعمال OpenGL كان يعني التطوير <def>بالطور المباشر (immediate mode)</def> (المسمى عادة <def>قناة العمل الثابت (fixed function pipeline)</def>) الذي كان طريقة سهلة لرسم الغرافيكس. اغلب العمل لOpenGL كان مخفيا داخل المكتبة و المطورين لم يكن لهم تحكم كبير على كيفية عمل OpenGL للعمليات الحسابية. المطورين فجأة ارادوا مرونة اكثر و بالوقت التخصيصات صارت اكثر مرونة و النتيجة؛ المطورين حصلوا على تحكم اكثر بالغرافيكس. الطور المباشر سهل جدا للاستعمال و الفهم، لكنه ايضا غير كفؤ جدا. لهذا السبب التخصيص بدأ باهمال عملية الطور المباشر من الاصدار 3.2 و ما بعده و بدأ بتحفيز المطورين للتطوير <def>بطور العمل الاساسي (core-profile)</def> لOpenGL، و هو قسم من تخصيص OpenGL الذي ازال كل العمليات القديمة و المهملة.
+            <br><br>
+            عند استعمال طور العمل الاساسي لOpenGL ،OpenGL يجبرنا على استعمال الممارسات الحديثة. كلما حاولنا استعمال احد الfunctions المهملة لOpenGL، OpenGL يرمي error و يتوقف عن الرسم. الفائدة من تعلم الطريقة الحديثة انها مرنة جدا و ذات كفاءة عالية. مع ذلك، انها صعبة للتعلم. الطور المباشر ازال كثيرا من العمليات <strong>الحقيقية</strong> التي اجراها OpenGL و بينما كان سهلا للتعلم، كان صعبا ادراك كيف يعمل OpenGL حقا. الطريقة الحديثة تتطلب من المطور ان يفهم حقا OpenGL و برمجة الغرافيكس و بينما هي صعبة قليلا، انها تسمح بمرونة اكثر بكثير، كفاءة اعلى، و اكثر اهمية: فهم افضل لبرمجة الغرافيكس.
+            <br><br>
+            و هذا ايضا هو السبب ان هذا الكتاب موجه على الاصدار 3.3 من OpenGL طور العمل الاساسي. مع انه اصعب، انه يستحق الجهد.
+            <br><br>
+            اعتبارا من اليوم، اصدارات اعلى من OpenGL متوفرة للاختيار (في وقت الكتابة 4.6) لذا ربما تتسائل: لماذا اريد تعلم OpenGL 3.3 و OpenGL 4.6 موجود؟ الجواب لهذا السؤال بسيط. كل الاصدارات المستقبلية من OpenGL ابتدائا من 3.3 تضيف ميزات مفيدة اكثر الى OpenGL بدون تغيير اساسيات عمل OpenGL؛ الاصدارات الاحدث فقط تضيف طرق اكثر كفاءة بقليل او مفيدة اكثر لانجاز نفس المهام. الناتج هو ان كل المفاهيم و التقنيات تضل نفسها في اصدارات OpenGL الحديثة لذا انه شيء صالح تماما ان تتعلم OpenGL 3.3. حينما تكون مستعدا و\او ذو خبرة اعلى تستطيع استعمال عمليات محددة من اصدارات OpenGL الجديدة بسهولة.
+        </p>
+        <warning><p class="paragraph">عند استعمال العمليات من احدث اصدار لOpenGL، فقط احدث كروت الشاشة سوف تستطيع تشغيل برنامجك. هذا غالبا السبب بان اغلب المطورين يستهدفون اصدارات اقل لOpenGL و اختياريا يُفعلون عملية اصدارات اعلى.</p></warning>
+        <p class="paragraph">في بعض الفصول ستجد ميزات حديثة اكثر و هي مذكورة في الأسفل.</p>
+
+        <h2 class="secondaryHead">التوسعات (extensions)</h2>
+        <p class="paragraph">
+            احد ميزات OpenGL الرائعة هي دعمه للتوسعات. كلما تجد شركة غرافيكس تقنية جديدة او تحسين في اداء الرسم عادة توجد في <def>توسع</def> في برامج تشغيل كرت الشاشة. اذا كانت الhardware التي يعمل عليها البرنامج تدعم توسع كهذا فان المطور يستطيع استعمال العمليات المتوفرة بواسطة التوسع للحصول على غرافيكس كفؤ او متقدم اكثر. بهذه الطريقة، مطور الغرافيكس يستطيع استعمال طرق الرسم الجديدة بدون ان ينتظر لOpenGL بان يضيف العمليات هذه في اصدارات قادمة، ببساطة بأن يتأكد ان كان التوسع مدعوما بواسطة كرت الشاشة. غالبا، عندما يكون توسع مشهورا او مفيدا جدا سيكون جزء من اصدارات OpenGL القادمة.
+            <br><br>
+            على المطور أن يتحقق اذا كان اي من هذه التوسعات متوفرا قبل استعمالها (او أن يستعمل مكتبة لتوسعات OpenGL). هذا يسمح للمطور بفعل الاشياء بشكل افضل او اكثر كفاءة، اعتمادا على اذا كان التوسع متوفرا ام لا:
+        </p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 15px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+    if(GL_ARB_extension_name)
+    {
+        // فعل اشياء جديدة و حديثة مدعومة بواسطة الجهاز
+    }
+    else
+    {
+        // إمتداد غير مدعوم: فعلها بالطريقة القديمة
+    }</code>
+        </pre>
+        <p class="paragraph">مع OpenGL الاصدار 3.3 نادرا ما نحتاج توسع لأغلب التقنيات، لكن حيثما تكون مهمة سيتم توفير الارشادات المناسبة.</p>
+
+        <h2 class="secondaryHead">تسلسل حالات</h2>
+        <P class="paragraph">
+            OpenGL بنفسه هو تسلسل حالات كبير: مجموعة متغيرات تحدد كيف يجب لOpenGL أن يعمل. حالة OpenGL عادة تسمى سياق OpenGL (OpenGL context). عند استعمال OpenGL، كثيرا ما نغير حالته بتعديل بعض الخيارات، التلاعب ببعض فواصل الذاكرة (buffers) و بعدها الرسم باستعمال الحالة الحالية.
+            <br><br>
+            عندما نقول لOpenGL اننا نريد رسم الخطوط بدل المثلثات مثلا، نحن نغير حالة OpenGL بتغيير احد متغيرات السياق الذي يحدد كيف يرسم OpenGL. حالما نغير السياق بواسطة القول لOpenGL بانه يجب ان يرسم الخطوط، اوامر الرسم القادمة سترسم خطوطا بدل المثلثات.
+            <br><br>
+            عند العمل باستعمال OpenGL سوف نمر على العديد من الfunctions <def>المغيرة للحالة</def> التي ستغير السياق و عدة functions <def>مستعملة للحالة</def> التي تنفذ بعض العمليات بنائا على الحالة الحالية لOpenGL. طالما تذكرت ان OpenGL هو بكل بساطة تسلسل حالات كبير، غالبية العملية له ستكون منطقية اكثر.
+        </P>
+
+        <h2 class="secondaryHead">Objects</h2>
+        <p class="paragraph">
+            مكاتب OpenGL مكتوبة بلغة C و تسمح للعديد من المشتقات في لغات اخرى، لكن في الحقيقة تضل مكتبة بلغة C. بما ان اغلب تركيبات C لا تترجم بسهولة الى لغات اعلى مستوى، طُور OpenGL بشكل يسمح له بالعمل في لغات مستواها اعلى، مثلا الobjects في OpenGL.
+            <br><br>
+            ال<def>object</def> في OpenGL هو مجموعة خيارات تمثل تفرع لحالة OpenGL. مثلا، من الممكن ان يكون لنا object يمثل اعدادات نافذة الرسم؛ عندها نستطيع تهيئة حجم النافذة، كم لونا تدعمه و هكذا. تستطيع النظر للobjects مثل struct بلغة C:
+        </p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 15px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+    struct object_name {
+        float  option1;
+        int    option2;
+        char[] name;
+    };</code>
+        </pre>
+        <p class="paragraph">عندما نريد استعمال الobjects عادة ما تكون مشابهة لهذا (مع سياق OpenGL بشكل struct كبير):</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 15px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+    // OpenGL حالة
+    struct OpenGL_Context {
+        ...
+        object_name* object_Window_Target;
+        ...  	
+    };</code>
+        </pre>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 15px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+    // object انشاء
+    unsigned int objectId = 0;
+    glGenObject(1, &objectId);
+    // بالسياق objectربط\تعيين ال
+    glBindObject(GL_WINDOW_TARGET, objectId);
+    // GL_WINDOW_TARGETالمربوط حاليا ب objectتعديل خيارات ال
+    glSetObjectOption(GL_WINDOW_TARGET, GL_OPTION_WINDOW_WIDTH,  800);
+    glSetObjectOption(GL_WINDOW_TARGET, GL_OPTION_WINDOW_HEIGHT, 600);
+    // تعديل هدف السياق الى الاصل (الغاء الربط)
+    glBindObject(GL_WINDOW_TARGET, 0);</code>
+        </pre>
+        <p class="paragraph">قطعة الكود الصغيرة هذه هي طريقة سير البرنامج و ستراها بتكرار عند العمل مع OpenGL. نحن اولا ننشئ object و نحفظ مرجعا له كتعريف (ID) (بيانات الobject الحقيقية مخزنة وراء الكواليس). بعدها نربط الobject (باستعمال الID الخاص به) بموقع الهدف للسياق (موقع نافذة المثال معرف باسم <var>GL_WINDOW_TARGET</var>). بعدها نعدل خيارات النافذة و اخيرا نلغي ربط الobject بتعديل id الobject الحالي لهدف النافذة الى 0. الخيارات التي عدلناها محفوظة في الobject المشار اليه من قبل <var>objectId</var> و سيرجع حالما نربط الobject مرة اخرى ب<var>GL_WINDOW_TARGET</var></p>
+        <warning><p class="paragraph">عينات الكود هذه هي مجرد تشبيه عن كيفية عمل Opengl؛ في هذا الكتاب سوف تمر على امثلة حقيقية كثيرة</p></warning>
+        <p class="paragraph">الشيء المميز عند إستخدام هذه الobjects هو أنه يمكننا تعريف أكثر من object واحد في برنامجنا، تعديل خياراتهم و كلما نبدأ عملية تستخدم حالة OpenGL، نربط الobject بالإعدادات التي نرغب بها، مثلا هنالك objects تتصرف كأنها حاوية للمجسمات الثلاثية الأبعاد (بيت أو شخصية) و متى ما نريد رسم واحدة منهم، نربط الobject الذي يحتوي على بيانات المجسم الذي نريد رسمه (نحن اولا انشأنا و ضبطنا الإعدادات لهذه الobjects). وجود مجموعة من الobjects يسمح لنا بتحديد عدد كبير من المجسمات ومتى ما نريد ان نرسم مجسم محدد. نقوم بربط الobject المناسب قبل الرسم بدون اعادة ضبط الاعدادات كلها مرة اخرى.</p>
+
+        <h2 class="secondaryHead">لنبدأ</h2>
+        <p class="paragraph">الآن قد تعلمت القليل  عن OpenGL كتخصيص و كمكتبة، كيف يعمل OpenGL تقريبا خلف الكواليس و بعض الحيل التي يستعملها OpenGL. لا تقلق إن لم تفهم كل شيء؛ خلال هذا الكتاب سنشرح كل خطوة و سوف ترى ما يكفي من الأمثلة لفهم OpenGL.</p>
+
+        <h2 class="secondaryHead">مصادر اضافية</h2>
+        <li class="paragraph" style="margin-top: 15px;"><a href="http://www.opengl.org">opengl.org</a>: الموقع الرسمي لOpenGL.</li>
+        <li class="paragraph"><a href="http://www.opengl.org/registry">سجل OpenGL</a>: كل تخصيصات OpenGL و التوسعات لكل اصدارات OpenGL.</li>
+        
+        <footer>
+            <button class="nextPageButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/hello-window')">الصفحة القادمة</button>
+        </footer>
+    </div>
+
+    <script>
+        let openedMenu_ = "gettingStarted"; //the menu that is opened at the moment
+        let currentMenu = "gettingStarted"; //the menu of the webpage that is opened at the moment
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/glsl.min.js"></script>
+    <script>window.onload = function() {hljs.highlightAll();}</script>
+    <script src="../../global/global.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../global/icon.ico">
+    <title>LearnOpenGL</title>
+    <link rel="stylesheet" href="../../global/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/vs2015.min.css">
+</head>
+
+<body>
+    <div class="pageChooseDiv">
+        <button class="pageChooseButton" onclick="newTab('//github.com/JoeyDeVries/LearnOpenGL')">GitHub</button>
+        <button class="pageChooseButton" onclick="switchBg()">تغيير الخلفية</button>
+        <button class="pageChooseButton" onclick="redirect('//vector50.github.io/LearnOpenGL-AR/land')">الصفحة الرئيسية</button>
+        <button class="pageChooseButton" onclick="redirect('//vector50.github.io/LearnOpenGL-AR/intro')">المقدمة</button>
+        <button class="pageChooseButton" onclick="openCloseMenu('gettingStarted')">البداية 🢓</button>
+        <button class="secondaryPageChooseButton" id="gettingStarted>opengl" style="display: block;" onclick="redirect('//vector50.github.io/LearnOpenGL-AR/getting-started/opengl')">OpenGL</button>
+    </div>
+
+    <div class="mainDiv">
+        <h1 class="mainHead">انشاء نافذة</h1>
+        <p class="paragraph">
+            
+            <br><br>
+
+        </p>
+        
+        <h2 class="secondaryHead">GLFW</h2>
+        <p class="paragraph">
+            
+            <br><br>
+
+        </p>
+
+        <h2 class="secondaryHead">بناء GLFW</h2>
+        <p class="paragraph"></p>
+        <warning><p class="paragraph"></p></warning>
+        <p class="paragraph"></p>
+        <li class="paragraph"></li>
+        <li class="paragraph"></li>
+        <p class="paragraph"></p>
+
+        <h2 class="thirdHead">CMake</h2>
+        <p class="paragraph">
+            
+            <br><br>
+            
+        </p>
+        <img src="" alt="">
+        <p class="paragraph"></p>
+
+        <h2 class="thirdHead">تحويل الكود الى لغة الحاسوب (Compilation)</h2>
+        <p class="paragraph">
+            
+            <br><br>
+            
+        </p>
+        <li class="paragraph"></li>
+        <li class="paragraph"></li>
+        <p class="paragraph"></p>
+
+        <h2 class="secondaryHead">مشروعنا الأول</h2>
+        <p class="paragraph"></p>
+        <img src="" alt="">
+        <p class="paragraph"></p>
+        
+        <h2 class="secondaryHead">ربط المكتبة (linking)</h2>
+        <p class="paragraph">
+            
+            <br><br>
+            
+        </p>
+        <img src="" alt="">
+        <p class="paragraph"></p>
+        <img src="" alt="">
+        <p class="paragraph">
+            
+            <br><br>
+            
+        </p>
+        <img src="" alt="">
+        <p class="paragraph"></p>
+
+        <h2 class="thirdHead">مكتبة OpenGL على Windows</h2>
+        <p class="paragraph"></p>
+        <h2 class="thirdHead">مكتبة OpenGL على Linux</h2>
+        <p class="paragraph">
+            
+            <br><br>
+            
+        </p>
+        <pre>
+            <code id="code1" class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            margin-top: -35px;
+            margin-bottom: -70px;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 15px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+            </code>
+        </pre>
+        <note><p class="paragraph"></p></note>
+        <p class="paragraph"></p>
+
+        <h2 class="secondaryHead">GLAD</h2>
+        <p class="paragraph"></p>
+        <pre>
+            <code id="code1" class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            margin-top: -35px;
+            margin-bottom: -70px;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 15px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+    // define the function's prototype
+    typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
+    // find the function and assign it to a function pointer
+    GL_GENBUFFERS glGenBuffers  = (GL_GENBUFFERS)wglGetProcAddress("glGenBuffers");
+    // function can now be called as normal
+    unsigned int buffer;
+    glGenBuffers(1, &buffer);</code>
+        </pre>
+        <p class="paragraph"></p>
+
+        <h2 class="thirdHead">تجهيز GLAD</h2>
+        <p class="paragraph">
+            
+            <br><br>
+            
+        </p>
+        <warning><p class="paragraph"></p></warning>
+        <p class="paragraph">
+            
+            <br><br>
+            
+        </p>
+        <pre>
+            <code id="code2" class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            margin-top: -35px;
+            margin-bottom: -70px;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 15px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+    // define the function's prototype
+    typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
+    // find the function and assign it to a function pointer
+    GL_GENBUFFERS glGenBuffers  = (GL_GENBUFFERS)wglGetProcAddress("glGenBuffers");
+    // function can now be called as normal
+    unsigned int buffer;
+    glGenBuffers(1, &buffer);</code>
+        </pre>
+        <p class="paragraph"></p>
+
+        <h2 class="secondaryHead">مصادر اضافية</h2>
+        <li class="paragraph" style="margin-top: 15px;"></li>
+        <li class="paragraph"></li>
+        <li class="paragraph"></li>
+        <li class="paragraph"></li>
+        <li class="paragraph"></li>
+        <li class="paragraph"></li>
+
+        <footer class="footer">
+            <a href="http://learnopengl.com" target="_blank" class="footerElement">LearnOpenGL</a>
+            <a href="http://github.com/vector50" target="_blank" class="footerElement">My GitHub</a>
+        </footer>
+    </div>
+
+    <script>
+        let gettingStarted_ = true;
+        document.getElementById("code1").textContent = "#include <GLFW/glfw3.h>"
+        document.getElementById("code2").textContent = "#include <glad/glad.h>"
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/glsl.min.js"></script>
+    <script>window.onload = function() {hljs.highlightAll();}</script>
+    <script src="../../global/global.js"></script>
+</body>
+
+</html>

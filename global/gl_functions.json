@@ -1,0 +1,12 @@
+{
+    "glEnable":
+    {
+        "explain": "هذا الfunction يسمح لنا باعداد حالات عديدة او قدرات لOpenGL مثلا تشغيل طور العرض ثلاثي الأبعاد (Depth testing)، خلط الالوان الشفافة (Alpha blending). متى يتم تفعيل ميزة، ستضل تعمل حتى يتم استعمال glDisable.",
+        "paramExplain": "معطيات 'glEnable(Glenum cap)' هي كالتالي:",
+        "params":
+        [
+            "cap: يمثل ثابت يمثل قدرة لOpenGL."
+        ],
+        "exampleUsage": "glEnable(GL_DEPTH_TEST);"
+    }
+}

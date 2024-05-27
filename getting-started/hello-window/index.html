@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../global/icon.ico">
+    <title>LearnOpenGL</title>
+    <link rel="stylesheet" href="../../global/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/vs2015.min.css">
+    <style>
+        img
+        {
+            margin-inline: auto;
+            width: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <button class="pageChooseButton" onclick="newTab('github.com/JoeyDeVries/LearnOpenGL')">GitHub</button>
+        <button class="pageChooseButton" onclick="switchBg()"><strong>تغيير الخلفية</strong></button>
+        <button class="pageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/land')"><strong>الصفحة الرئيسية</strong></button>
+        <button class="pageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/intro')"><strong>المقدمة</strong></button>
+        <button class="pageChooseButton" style="border-color: rgb(100, 184, 187);" id="button-gettingStarted" onclick="openCloseMenu('gettingStarted')"><strong>البداية</strong></button>
+    </header>
+    <underHeader id="underHeader-gettingStarted" style="display: inline;">
+        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/opengl')">OpenGL</button>
+        <button class="secondaryPageChooseButton" style="border-color: rgb(100, 184, 187);" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/hello-window')">النافذة الترحيبية</button>
+    </underHeader>
+
+    <div class="mainDiv">
+        <h1 class="mainHead">النافذة الترحيبية</h1>
+        <p class="paragraph">لنتأكد من ان GLFW يعمل. اولا، أنشئ ملف <strong>cpp.</strong> و أضف الincludes التالية في أعلى الملف الذي أنشأته.</p>
+        <pre>
+            <code id="code1" class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+            </code>
+        </pre>
+        <warning><p class="paragraph">تأكد من شمل GLAD قبل GLFW. ملف GLAD يشمل كل ملفات OpenGL المطلوبة خلف الكواليس (مثلا GL/gl.h) لذا تأكد من شمل GLAD قبل ملفات الرؤوس الأخرى التي تتطلب OpenGL (مثل GLFW).</p></warning>
+        <p class="paragraph">بعدها، ننشئ ال<fun>main</fun> function الذي فيه سوف ننشئ نافذة GLFW:</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+int main()
+{
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    
+    return 0;
+}</code>
+        </pre>
+        <p class="paragraph" id="fixHtmlCuzItSucks">
+            في الmain function نحن أولا نجهز GLFW باستعمال <function onclick="showFunctionDialog('glfwInit')">glfwInit</function>، بعدها نستطيع تعديل خيارات GLFW باستعمال <function onclick="showFunctionDialog('glfwWindowHint')">glfwWindowHint</function>. اول مُعامل ل<function onclick="showFunctionDialog('glfwWindowHint')">glfwWindowHint</function> يقول لنا ما هو الخيار الذي نريد تعديله، حيث نسنطيع اختيار الخيار من enum كبير من الخيارات الممكنة البادئة ب<strong>_GLFW</strong>. المُعامل الثاني هو عدد صحيح يحدد قيمة الخيار. قائمة تحتوي على كل الخيارات الممكنة و القيم المناسبة لها من الممكن ايجادها في توثيق <a href="http://www.glfw.org/docs/latest/window.html#window_hints" target="_blank">ادارة النوافذة لGLFW</a>. اذا حاولت تشغيل البرنامج الآن و أعطاك العديد من أخطاء <em>undefined reference</em> (مرجع غير معرف) ذلك يعني انك لم تربط مكتبة GLFW بشكل صحيح.
+            <br><br>
+            بما أن تركيز هذا الكتاب على OpenGL الاصدار 3.3 نريد أن نقول لGLFW بأن 3.3 هو اصدار OpenGL الذي نريد استعماله. بهذه الطريقة سيستطيع GLFW بأن يعد الترتيبات الملائمة عند انشاء سياق OpenGL. هذا يضمن انه عندما يكون المستخدم ليس لديه اصدار OpenGL المناسب لن يعمل GLFW. نحن ايضا جعلنا الاصدار الاقل و الاعلى 3. و ايضا قلنا لGLFW اننا نريد استعمال طور العمل الاساسي (core-profile). القول لGLFW اننا نريد استعمال طور العمل الاساسي يعني اننا سنحصل على وصول لتفرع أصغر من مميزات OpenGL بدون المميزات المتوافقة مع الاجيال القديمة التي لا نحتاجها بعد الآن. تذكر ان على نظام Mac OS X ستحتاج لاضافة <strong>;<function onclick="showFunctionDialog('glfwWindowHint')">glfwWindowHint</function>(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE)</strong> الى كود التهيئة ليعمل.
+        </p>
+        <note><p class="paragraph">تأكد أنه لديك OpenGL الاصدار 3.3 او أعلى على نظامك\الhardware عدا ذلك سيتوقف البرنامج او يُظهر تصرفات غريبة. لايجاد اصدار OpenGL على جهازك اما استعمل الأمر <strong>glxinfo</strong> على Linux او استعمل أداة مثل <a href="http://download.cnet.com/OpenGL-Extensions-Viewer/3000-18487_4-34442.html" target="_blank">مُشاهد التوسعات لOpenGL</a> على Windows. اذا كان الاصدار اقل حاول التأكد اذا كان كرت الشاشة الخاص بك يدعم +OpenGL 3.3 (عدا ذلك فانه قديم جدا) و\او حدث برامج تشغيل الكرت.</p></note>
+        <p class="paragraph">بعدها يجب ان ننشئ object النافذة. هذا الobject يحمل كل معلومات النافذة و هو متطلب من أغلب الfunctions الأخرى لGLFW.</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+if (window == NULL)
+{
+    std::cout << "Failed to create GLFW window" << std::endl;
+    glfwTerminate();
+    return -1;
+}
+glfwMakeContextCurrent(window);</code>
+        </pre>
+        <p class="paragraph">function ال<function onclick="showFunctionDialog('glfwCreateWindow')">glfwCreateWindow</function> يتطلب طول و عرض النافذة في اول مُعاملين له. المُعامل الثالث يسمح لنا بانشاء اسم للنافذة؛ لنسميه "LearnOpenGL" لكنك تستطيع تسميته ما يعجبك. سنتجاهل آخر مُعاملين. الfunction يُعيد object ال<fun>GLFWwindow</fun> الذي سنحتاجه لاحقا لعمليات GLFW اخرى. بعد ذلك نقول لGLFW بأن يجعل سياق النافذة هو السياق الأساسي للthread الحالية.</p>
+
+        <h2 class="secondaryHead">GLAD</h2>
+        <p class="paragraph">في الفصل السابق قلنا ان GLAD يدير مؤشرات الfunctions لOpenGL لذا نريد تهيئة GLAD قبل استعمال اي function لOpenGL:</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+{
+    std::cout << "Failed to initialize GLAD" << std::endl;
+    return -1;
+}    </code>
+    </pre>
+        <p class="paragraph">نعطي GLAD الfunction الذي يُحمل عنوان مؤشرات الfunctions لOpenGL الذي يكون مختلفا حسب نظام التشغيل. GLFW يعطينا <fun>glfwGetProcAddress</fun> الذي يعرف الfunction الصحيح حسب نظام التشغيل الذي نريد ان يعمل البرنامج فيه.</p>
+
+        <h2 class="secondaryHead">منفذ عرض الشاشة (viewport)</h2>
+        <p class="paragraph">قبل أن نبدأ بالرسم يجب علينا فعل شيء أخير. يجب أن نقول لOpenGL حجم نافذة الرسم لكي يعلم OpenGL كيف نريد اظهار البيانات و الاحداثيات بشكل صحيح على النافذة. نستطيع تعديل هذه الأبعاد عن طريق function ال<function onclick="showFunctionDialog('glViewport')">glViewport</function>:</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+glViewport(0, 0, 800, 600);</code>
+        </pre>
+        <p class="paragraph">
+            اول مُعاملين ل<function onclick="showFunctionDialog('glViewport')">glViewport</function> تُعد موقع الجهة السفلى اليسرى من النافذة. المُعامل الثالث و الرابع يُعدان عرض و طول نافذة الرسم بقياس الpixels، الذي جعلناه مساوي لحجم نافذة GLFW.
+            <br><br>
+            نحن نستطيع أن نعد أبعاد منفذ العرض بقيم أصغر من أبعاد نافذة GLFW؛ عندها سيظهر كل رسم OpenGL في نافذة أصغر و نستطيع مثلا أن نعرض أشياء أخرى خارج منفذ عرض OpenGL.
+        </p>
+        <note><p class="paragraph">خلف الكواليس يستعمل OpenGL البيانات المحددة خلال <function onclick="showFunctionDialog('glViewport')">glViewport</function> ليحول الاحداثيات ثنائية الأبعاد الذي عالجها الى احداثيات على شاشتك. مثلا، نقطة موقع معالجة (0.5 ,0.5-) سوف تكون (في تحولها الأخير) معينة الى (450 ,200) على احداثيات الشاشة. تذكر ان الاحداثيات المعالجة في OpenGL هي بين 1- و 1 لكي نستطيع تغيير المدى (1- الى 1) الى (800 ,0) و (600 ,0).</p></note>
+        <p class="paragraph">مع ذلك، عندما يغير مستخدم حجم النافذة فان منفذ العرض يجب ان يعدل ايضا. نستطيع تسجيل function في النافذة يُستدعى كلما يُغير حجم النافذة. هذا الfunction له النموذج التالي:</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);  </code>
+        </pre>
+        <p class="paragraph">function حجم الاطار (الframe) يأخذ <fun>GLFWwindow</fun> في مُعامله الأول و عددان صحيحان يحددان أبعاد النافذة الجديدة. حينما يتم تغيير حجم النافذة، GLFW يُستدعي هذا الfunction و يضع المُعاملات المناسبة لك لكي تعالجها.</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}  </code>
+        </pre>
+        <p class="paragraph">و طبعا يجب أن نقول لGLFW بأننا نريد استدعاء هذا الfunction كلما تغير حجم النافذة بواسطة تسجيله:</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  </code>
+        </pre>
+        <p class="paragraph">
+            عندما تُعرض النافذة لأول مرة يتم استدعاء <fun>framebuffer_size_callback</fun> ايضا مع ابعاد النافذة الناتجة. لشاشات عرض ريتينا (retina) متغيري العرض <var>width</var> و الطول <var>height</var> سيكونان أعلى بكثير من القيم الأصلية.
+            <br><br>
+            يوجد العديد من functions الاستدعاء (callback functions) نستطيع تعديلها لتسجيل الfunctions الخاصة بنا. مثلا، نستطيع انشاء function استدعاء لمعالجة التغيرات بجهاز ادخال عصا التحكم، معالجة رسائل الerrors الخ. نحن نسجل functions الاستدعاء بعد انشاء النافذة و قبل بداية loop الرسم.
+        </p>
+
+        <h2 class="secondaryHead">جهزوا محركاتكم</h2>
+        <p class="paragraph">نحن لا نريد البرنامج لأن يرسم صورة واحدة ثم يتوقف و يغلق النافذة مباشرة. نريد البرنامج ليرسم الصور باستمرار و أن يدير عمليات ادخال المستخدم الى أن يقال للبرنامج بأن يتوقف. لهذا يجب أن ننشئ while loop، التي سوف نسميها <def>loop الرسم</def>، التي ستضل تعمل حتى نقول لGLFW بأن يتوقف. الكود التالي يعرض loop رسم بسيطة:</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+while(!glfwWindowShouldClose(window))
+{
+    glfwSwapBuffers(window);
+    glfwPollEvents();    
+}</code>
+        </pre>
+        <p class="paragraph">
+            function ال<function onclick="showFunctionDialog('glfwWindowShouldClose')">glfwWindowShouldClose</function> يتأكد في بداية كل دورة للloop اذا كان GLFW قد أُمر بالتوقف. اذا كان ذلك صحيحا، سيُعيد ال<strong>true</strong> function و loop الرسم ستتوقف، بعدها نستطيع ايقاف البرنامج.
+            <br>
+            function ال<function onclick="showFunctionDialog('glfwPollEvents')">glfwPollEvents</function> يتحقق اذا حدثت اي الأحداث (events) (كادخال لوحة المفاتيح او أحداث تحريك الماوس)، يُحدث حالة النافذة، و يستدعي الfunctions المناسبة (التي نستطيع تسجيلها بطرق الاستدعاء). <function onclick="showFunctionDialog('glfwSwapBuffers')">glfwSwapBuffers</function> سيغير buffer (فاصل ذاكرة) اللون (buffer ثنائي الأبعاد كبير يحوي قيم الالوان لكل pixel في نافذة GLFW) المستعمل للرسم في دورة الرسم هذه و اظهار الرسم كoutput على الشاشة.
+        </p>
+        <note><p class="paragraph">
+            <strong>الbuffer المزدوج</strong>
+            <br>
+            عندما يرسم البرنامج باستعمال buffer واحد فان الصورة الناتجة قد تعرض مشكلة وميض. هذا لأن الصورة الناتجة لا تُرسم مباشرة، بل تُرسم pixel تلو الآخر و عادة من اليسار الى اليمين و من الأعلى الى الأسفل. لأن هذه الصورة لا تُعرض مباشرة للمستخدم بينما يتم الرسم عليها، فان النتيجة قد تحتوي على مشاكل. لحل هذه المشاكل، البرامج التي تستعمل نافذة تستعمل buffer مزدوج للرسم. الbuffer الأمامي يحتوي على الصورة النهائية بعد الرسم التي تُعرض على الشاشة، بينما ترسم كل أوامر الرسم على الbuffer الخلفي. حالما تنتهي كل أوامر الرسم نقلب الbuffer الخلفي الى الbuffer الأمامي لكي تظهر الصورة بدون ان يُرسم عليها، مما يزيل المشاكل التي ذكرناها.
+        </p></note>
+
+        <h2 class="secondaryHead">شيء أخير</h2>
+        <p class="paragraph">حالما نخرج من loop الرسم سوف نريد أن ننظف\نمحي كل موارد GLFW التي قد خُصصت لها ذاكرة بشكل صحيح. نستطيع فعل ذلك باستعمال function ال<function>glfwTerminate</function> الذي نستدعيه في نهاية function ال<fun>main</fun>.</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+glfwTerminate();
+return 0;</code>
+        </pre>
+        <p class="paragraph">هذا سيُنظف كل الموارد و يُوقف البرنامج بشكل سليم. الآن حاول تشغيل برنامجك و اذا كان كل شيء صحيحا من المفترض أن ترى الoutput التالي:</p>
+        <img src="../../global/media/getting-started/hellowindow.png" alt="صورة لنافذة GLFW">
+        <p class="paragraph">
+            اذا كانت صورة سوداء مملة، فقد فعلت كل شيء بشكل صحيح! اذا لم تحصل على الصورة الصحيحة او كنت حائرا عن كيفية عمل كل شيء، تحقق من الكود الكامل <a href="">هنا</a> (و اذا كانت تومض بألوان مختلفة، تابع القراءة).
+            <br><br>
+            اذا كانت لديك مشاكل في compiling البرنامج، اولا تأكد أن كل خيارات الlinker معدلة بشكل صحيح و أنك شملت مواقع الملفات الصحيحة في الIDE الخاص بك (كما شرحنا في الفصل السابق). ايضا تأكد من أن الكود صحيح؛ تستطيع التأكد بمقارنته مع الكود الكامل.
+        </p>
+
+        <h2 class="secondaryHead">الادخال (input)</h2>
+        <p class="paragraph">نحن ايضا نريد طريقة تحكم بالإدخال في GLFW و نستطيع تحقيق هذا بعدة من functions الإدخال لGLFW. سوف نستعمل function ال<fun>glfwGetKey</fun> لGLFW الذي يأخذ النافذة و المفتاح (الزر). الfunction يُعيد إذا ما كان الزر مضغوطاً حالياً. سوف ننشئ function نسميه <fun>processInput</fun> ليكون كود الإدخال مُرتب:</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+void processInput(GLFWwindow *window)
+{
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+}</code>
+        </pre>
+        <p class="paragraph">
+            هنا نتحقق إذا ضغط المستخدم على زر escape (اذا لم يكن مضغوطاً، سيُعيد <fun>glfwGetKey</fun> القيمة <var>GLFW_RELEASE</var>). اذا ضغط المستخدم زر escape، نُغلق GLFW بتغيير صفة <var>WindowShouldClose</var> الى <strong>true</strong> بإستعمال <fun>glfwSetwindowShouldClose</fun>. بعدها التحقق من أن <fun>glfwWindowShouldClose(window)</fun> غير صحيح في الloop الرئيسية سوف يفشل ثم سيتوقف البرنامج.
+            <br><br>
+            نحن بعدها نستدعي <fun>processInput</fun> في كل دورة لloop الرسم:
+        </p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+while (!glfwWindowShouldClose(window))
+{
+    processInput(window);
+
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+}</code>
+        </pre>
+        <p class="paragraph">هذا يعطينا طريقة سهلة للتحقق من ضغطات أزرار محددة و نتفاعل وفقاً لذلك كل <def>frame</def>. دورة واحدة في loop الرسم تُسمى عادةً <def>frame</def>.</p>
+
+        <h2 class="secondaryHead">الرسم (rendering)</h2>
+        <p class="paragraph">نحن نريد أن نضع كل أوامر الرسم في loop الرسم، لأننا نريد تفعيل كل أوامر الرسم في كل دورة أو frame من loop الرسم. هذا سيكون مشابهاً لهذا:</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+// الرسم loop
+while(!glfwWindowShouldClose(window))
+{
+    // الإدخال
+    processInput(window);
+
+    // أوامر الرسم هنا
+    ...
+
+    // check and call events and swap the buffers
+    // buffersالخاص بها و اقلب ال functionتحقق من الأحداث و استدعي ال
+    glfwPollEvents();
+    glfwSwapBuffers(window);
+}</code>
+        </pre>
+        <p class="paragraph">فقط للتأكد من أن كل شيء يعمل سوف نمحي الشاشة بلون من اختيارنا. في بداية الframe نريد محي الشاشة. عدا ذلك فإننا سنضل نرى النتيجة من الframe السابق (قد يكون هذا التأثير الذي تبحث عنه، لكن عادةً لا تريده). نستطيع محي buffer لون الشاشة بإستعمال <function onclick="showFunctionDialog('glClear')">glClear</function> الذي نعطيه bits الbuffer لنحدد أي buffer نريد محيه. الbits الممكن استعمالها هي <var>GL_COLOR_BUFFER_BIT</var>، <var>GL_DEPTH_BUFFER_BIT</var> و <var>GL_STENCIL_BUFFER_BIT</var>. حالياً نحن نهتم فقط بقيم الألوان لذا سنمحي فقط buffer اللون.</p>
+        <pre>
+            <code class="language-cpp" style=
+            "
+            direction: ltr;
+            display: block;
+            background: #282B2E;
+            border-radius: 7px;
+            border: 3px solid #bbb;
+            font-size: 16px;
+        
+            color: rgb(195, 195, 195);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+glClear(GL_COLOR_BUFFER_BIT);</code>
+        </pre>
+        <p class="paragraph">لاحظ أننا ايضاً نحدد اللون الذي نريد محي الشاشة به بإستعمال <function onclick="showFunctionDialog('glClearColor')">glClearColor</function>. كلما نستدعي <function onclick="showFunctionDialog('glClear')">glClear</function> و نمحي buffer اللون، فإن buffer اللون كله سيُملأ باللون المحدد بواسطة <function onclick="showFunctionDialog('glClearColor')">glClearColor</function>. هذا سيُنتج لون أخضر-مُزرق غامق.</p>
+        <note><p class="paragraph">كما قد تتذكر من فصل <em>OpenGL</em>، إن function ال<function onclick="showFunctionDialog('glClearColor')">glClearColor</function> هو function مُحدد-للحالة و <function onclick="showFunctionDialog('glClear')">glClear</function> هو function مُستعمل-للحالة حيث يستعمل الحالة الحالية للحصول على لون المحي منها.</p></note>
+        <img src="../../global/media/getting-started/hellowindow2.png" alt="صورة لنافذة GLFW">
+        <p class="paragraph">
+            الكود الكامل للبرنامج تستطيع ايجاده <a href="" target="_blank">هنا</a>
+            <br><br>
+            الآن لقد جهزنا كل شيء لملئ loop الرسم بالعديد من أوامر الرسم، لكن هذا في الفصل <a href="" target="_blank">القادم</a>. أضن اننا تكلمنا كفاية هنا.
+        </p>
+
+        <footer>
+            <!--
+                <button class="nextPageButton" onclick="redirect('//vector50.github.io/learnopengl-ar/getting-started/hello-window')">الصفحة القادمة</button>
+            -->
+        </footer>
+    </div>
+
+    <script>
+        let openedMenu_ = "gettingStarted"; //the menu that is opened at the moment
+        let currentMenu = "gettingStarted"; //the menu of the webpage that is opened at the moment
+        document.getElementById("code1").textContent = "#include <glad/glad.h>\n#include <GLFW/glfw3.h>"
+        let winWidth = window.innerWidth;
+        if (winWidth <= 500 && winWidth >= 50)
+        {
+            document.getElementById("fixHtmlCuzItSucks").innerHTML = `
+            في الmain function نحن أولا نجهز GLFW باستعمال <function onclick="showFunctionDialog('glfwInit')">glfwInit</function>، بعدها نستطيع تعديل خيارات GLFW باستعمال <function onclick="showFunctionDialog('glfwWindowHint')">glfwWindowHint</function>. اول مُعامل ل<function onclick="showFunctionDialog('glfwWindowHint')">glfwWindowHint</function> يقول لنا ما هو الخيار الذي نريد تعديله، حيث نسنطيع اختيار الخيار من enum كبير من الخيارات الممكنة البادئة ب<strong>_GLFW</strong>. المُعامل الثاني هو عدد صحيح يحدد قيمة الخيار. قائمة تحتوي على كل الخيارات الممكنة و القيم المناسبة لها من الممكن ايجادها في توثيق <a href="http://www.glfw.org/docs/latest/window.html#window_hints" target="_blank">ادارة النوافذة لGLFW</a>. اذا حاولت تشغيل البرنامج الآن و أعطاك العديد من أخطاء <em>undefined reference</em> (مرجع غير معرف) ذلك يعني انك لم تربط مكتبة GLFW بشكل صحيح.
+            <br><br>
+            بما أن تركيز هذا الكتاب على OpenGL الاصدار 3.3 نريد أن نقول لGLFW بأن 3.3 هو اصدار OpenGL الذي نريد استعماله. بهذه الطريقة سيستطيع GLFW بأن يعد الترتيبات الملائمة عند انشاء سياق OpenGL. هذا يضمن انه عندما يكون المستخدم ليس لديه اصدار OpenGL المناسب لن يعمل GLFW. نحن ايضا جعلنا الاصدار الاقل و الاعلى 3. و ايضا قلنا لGLFW اننا نريد استعمال طور العمل الاساسي (core-profile). القول لGLFW اننا نريد استعمال طور العمل الاساسي يعني اننا سنحصل على وصول لتفرع أصغر من مميزات OpenGL بدون المميزات المتوافقة مع الاجيال القديمة التي لا نحتاجها بعد الآن. تذكر ان على نظام Mac OS X ستحتاج لاضافة <strong style="font-size: 15px">)<function onclick="showFunctionDialog('glfwWindowHint')">glfwWindowHint</function><br>GLFW_OPENGL_FORWARD_COMPAT,<br>;(GL_TRUE</strong> الى كود التهيئة ليعمل.`
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/glsl.min.js"></script>
+    <script>window.onload = function() {hljs.highlightAll();}</script>
+    <script src="../../global/global.js"></script>
+</body>
+
+</html>

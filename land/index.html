@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="../global/icon.ico">
+    <title>LearnOpenGL</title>
+    <link rel="stylesheet" href="../global/global.css">
+</head>
+
+<body>
+    <header>
+        <button class="pageChooseButton" onclick="newTab('github.com/JoeyDeVries/LearnOpenGL')">GitHub</button>
+        <button class="pageChooseButton" onclick="switchBg()"><strong>تغيير الخلفية</strong></button>
+        <button class="pageChooseButton" style="border-color: rgb(100, 184, 187);" onclick="redirect('vector50.github.io/learnopengl-ar/land')"><strong>الصفحة الرئيسية</strong></button>
+        <button class="pageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/intro')"><strong>المقدمة</strong></button>
+        <button class="pageChooseButton" id="button-gettingStarted" onclick="openCloseMenu('gettingStarted')"><strong>البداية</strong></button>
+    </header>
+    <underHeader id="underHeader-gettingStarted" style="display: inline;">
+        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/opengl')">OpenGL</button>
+        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/hello-window')">النافذة الترحيبية</button>
+    </underHeader>
+
+    <div class="mainDiv">
+        <p class="paragraph">هذا الموقع هو ترجمة ل<a href="https://learnopengl.com" target="_blank">LearnOpenGL</a> المنشأ بواسطة <a href="http://joeydevries.com">Joey De Vries</a>.</p>
+        <h1 class="mainHead">اهلا بك في OpenGL</h1>
+        <p class="paragraph">اهلا بك في الكتاب الافتراضي لتعلم OpenGL! سواء كنت تحاول تعلم OpenGL لأسباب أكاديمية، للعمل في مهنة او باحثا عن هواية، هذا الكتاب سيعلمك المعلومات الأساسية، المتوسطة، و المتقدمة باستعمال OpenGL الحديث. هدف LearnOpenGL هو توفير مرجع مفيد للدراسات لاحقا.</p>
+        
+        <h2 class="secondaryHead">لماذا اقرأ هذه الفصول؟</h2>
+        <p class="paragraph">على الإنترنت توجد العديد من الوثائق، الكتب، و المصادر عن تعلم OpenGL، ولكن اغلب هذه المصادر تركز على OpenGL القديم،  غير مكتملة، لا تحتوي على توثيق جيد، او غير مناسبة لك. لهذا، هدفي هو توفير منصة كاملة و ايضا سهلة الفهم.</p>
+        <img src="../global/media/index_image2.png">
+        <p class="paragraph">اذا كنت تحب قراءة المحتوى الذي يوفر تعليمات خطوة بخطوة، امثلة واضحة، و لا يرميك في العمق مع ملايين من التفاصيل، هذا الكتاب على الاغلب هو لك. الفصول تهدف لأن تكون قابلة للفهم لناس بدون اي خبرة في برمجة الرسومات (الغرافيكس)، لكنها مثيرة للإهتمام لقرائتها حتى للمستخدمين ذوي خبرة اكثر. نحن ايضا نناقش المواضيع العملية التي، مع بعض الإبداع، تستطيع تحويل أفكارك الى برامج ثلاثية الأبعاد حقيقية. اذا كان كل ما سبق يبدو كشخص قد يكون انت، رجائا تابع.</p>
+
+        <h2 class="secondaryHead">ماذا ستتعلم؟</h2>
+        <p class="paragraph">
+            تركيز هذه الفصول هو على OpenGL الحديث. تعلم (و استعمال) OpenGL الحديث يتطلب علم قوي عن برمجة الغرافيكس و كيف يعمل OpenGL في الخلفية للحصول على خبرة جيدة. لهذا سنبدأ بمناقشة الجوانب الأساسية للغرافيكس، كيف يرسم OpenGL البكسلات على شاشتك، و كيف نستطيع استعمال هذه المعلومات لإنتاج تأثيرات بشكل غير تقليدي.
+            <br><br>
+            مع المعلومات الأساسية سنناقش العديد من التقنيات المفيدة التي تستطيع استعمالها في تطبيقاتك، مثل: اكمال مشهد، صناعة اضاءة جميلة، تحميل شكل منتج بواسطة برنامج تصميم، استعمال تقنيات ما-بعد-المعالجة (post-processing) رائعة، و اكثر. نحن ايضاً نوفر سلسلة ارشادات نصنع فيها لعبة بسيطة بإستعمال المعلومات التي حصلنا عليها عن OpenGL، فستحصل حقاً على احساس عن كيف تكون برمجة الغرافيكس.
+        </p>
+
+        <h2 class="secondaryHead">أين تبدأ</h2>
+        <p class="paragraph">LearnOpenGL مجاني، و سيكون مجاني دائماً، لأي شخص يريد أن يبدأ ببرمجة الغرافيكس. كل المحتوى متوفر هنا في القائمة على يمينك. اضغط على زر المقدمة و أنت جاهز لأن تبدأ برحلتك!</p>
+
+        <footer>
+            <button class="nextPageButton" onclick="redirect('vector50.github.io/learnopengl-ar/intro')">الصفحة القادمة</button>
+        </footer>
+    </div>
+
+    <script src="../global/global.js"></script>
+</body>
+
+</html>
