@@ -20,7 +20,8 @@
     </header>
     <underHeader id="underHeader-gettingStarted">
         <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/opengl')">OpenGL</button>
-        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/hello-window')">النافذة الترحيبية</button>
+        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/creating-a-window')">إنشاء نافذة</button>
+        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/hello-window')">النافذة البدائية</button>
     </underHeader>
 
     <div class="mainDiv">
@@ -29,14 +30,14 @@
         
         <h2 class="secondaryHead">المتطلبات</h2>
         <p class="paragraph">
-            بما ان OpenGL واجهة برمجة تطبيقات (API) و ليست منصة بوحدها، انها تتطلب لغة برمجة لتعمل فيها و اللغة المختارة هي ++C. لهذا خبرة جيدة في لغة ++C متطلبة لهذه الفصول. مع ذلك، سأحاول شرح أغلب المواضيع المستعملة، من ضمنها مواضيع ++C متقدمة لا تحتاج لأن تكون خبيرا في ++C، ولكن يجب أن تكون قادرا على كتابة أكثر من برنامج "Hello World". اذا لم يكن لديك خبرة كبيرة في ++C اقترح التعليمات المجانية في <a href="http://www.learncpp.com/" target="_blank">www.learncpp.com</a>.
+            بما ان OpenGL واجهة برمجة تطبيقات (API) و ليست منصة بوحدها، انها تتطلب لغة برمجة لتعمل فيها و اللغة المختارة هي ++C. لهذا خبرة جيدة في لغة ++C متطلبة لهذه الفصول. مع ذلك، سأحاول شرح أغلب المواضيع المستعملة، من ضمنها مواضيع ++C متقدمة لا تحتاج لأن تكون خبيرا في ++C، ولكن يجب أن تكون قادرا على كتابة أكثر من برنامج "Hello World". اذا لم يكن لديك خبرة كبيرة في ++C اقترح التعليمات المجانية على <a href="http://www.learncpp.com/" target="_blank">www.learncpp.com</a>.
         <br><br>
         ايضا، سوف نستعمل بعض الرياضيات (الجبر الخطي، الهندسة، و هندسة المثلثات) على طول الطريق سوف احاول شرح المواضيع الرياضية المطلوبة. مع ذلك، انا لست عالم رياضيات فحتى لو كانت شروحي سهلة الفهم، على الاغلب ستكون غير كاملة. لذا عند الحاجة سوف أوفر مؤشرات الى مصادر جيدة تشرح الموضوع بشكل كامل أكثر. لا تخف من العلم الرياضي المطلوب قبل بدء رحلتك في OpenGL؛ أغلب المواضيع قابلة للفهم مع خلفية رياضية بمعرفة الأساسيات و سأحاول تقليل الرياضيات حيثما استطيع. أغلب العمل لا يتطلب منك معرفة كل الرياضيات طالما كنت تعرف كيف تستعملها.
         </p>
         
         <h2 class="secondaryHead">الهيكل</h2>
         <p class="paragraph">
-            LearnOpenGL مقسمة الى عدد من أقسام عامة. كل قسم يحتوي على مجموعة فصول كل منها يشرح مواضيع مختلفة بتفاصيل كثيرة. كل من هذه الفصول تستطيع ايجادها في القائمة على يمينك. المواضيع مشروحة بشكل خطي (لذا انصح بالبدء من الأعلى الى الأسفل، الا اذا أُرشدت بغير ذلك) حيث كل فصل يشرح الجوانب العملية.
+            LearnOpenGL مقسم الى عدد من أقسام عامة. كل قسم يحتوي على مجموعة فصول كل منها يشرح مواضيع مختلفة بتفاصيل كثيرة. كل من هذه الفصول تستطيع ايجادها في القائمة في الأعلى. المواضيع مشروحة بشكل خطي (لذا انصح بالبدء من اليمين الى اليسار، الا اذا أُرشدت بغير ذلك) حيث كل فصل يشرح الجوانب العملية.
             <br><br>
             لجعل المواضيع اسهل للمتابعة، و اعطائهم بعض الهيكل المضاف، الكتاب يحتوي على صناديق، حاويات الكود، الوان للتلميح، و مراجع للfunctions.
         </p>
@@ -59,7 +60,8 @@
         
             color: rgb(195, 195, 195);
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
-    // هذا الصندوق يحتوي على كود</code>
+    // هذا الصندوق يحتوي على كود
+</code>
         </pre>
         <p class="paragraph">بما ان هذه الصناديق توفر فقط مقاطع من الكود، عند الحاجة سأوفر رابطا للكود الكامل للموضوع.</p>
 
@@ -71,14 +73,15 @@
 
         <h2 class="thirdHead">مراجع الfunctions لOpenGL</h2>
         <p class="paragraph">
-            من أفضل ميزات LearnOpenGL هي القدرة على مراجعة أغلب الfunctions لOpenGL حيثما تظهر في المحتوى. متى يوجد function في المحتوى و يكون موثق في الموقع، الfunction سيظهر و تحته خط واضح. تستطيع الضغط على الfunction، ستظهر نافذة فيها المعلومات المهمة عن هذا الfunction ضمنها ملخص عن ما يفعله الfunction. و للخروج اضغط على النافذة. اضغط على 
+            من أفضل ميزات LearnOpenGL هي القدرة على مراجعة أغلب الfunctions لOpenGL حيثما تظهر في المحتوى. متى يوجد function في المحتوى و يكون موثق في الموقع، الfunction سيظهر و تحته خط واضح. تستطيع الضغط على الfunction، ستظهر نافذة فيها المعلومات المهمة عن هذا الfunction ضمنها ملخص عن ما يفعله الfunction. اضغط على 
             <function onclick="showFunctionDialog('glEnable')">glEnable</function>
             لمشاهدتها و هي تعمل.
             <br><br>
             بما انك عرفت كيفية عمل هيكل الموقع، اذهب الى قسم "البداية" لبداية رحلتك في OpenGL!
         </p>
 
-        <dialog id="glEnable" onclick="hideFunctionDialog('glEnable')">
+        <dialog id="glEnable">
+            <button class="dialogCloseButton" type="submit" onclick="hideFunctionDialog('glEnable')">❌</button>
             <p class="dialogFunctionName">glEnable</p>
             <p class="dialogExplain"></p>
             <p class="dialogParamExplain"></p>
@@ -96,7 +99,7 @@
             
                 color: rgb(195, 195, 195);
                 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
-                </code>
+</code>
             </pre>
         </dialog>
 

@@ -8,6 +8,9 @@
     <title>LearnOpenGL</title>
     <link rel="stylesheet" href="../../global/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/vs2015.min.css">
+    <style>
+        img { width: 300px; }
+    </style>
 </head>
 
 <body>
@@ -20,7 +23,8 @@
     </header>
     <underHeader id="underHeader-gettingStarted" style="display: inline;">
         <button class="secondaryPageChooseButton" style="border-color: rgb(100, 184, 187);" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/opengl')">OpenGL</button>
-        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/hello-window')">النافذة الترحيبية</button>
+        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/creating-a-window')">إنشاء نافذة</button>
+        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/hello-window')">النافذة البدائية</button>
     </underHeader>
 
     <div class="mainDiv">
@@ -52,7 +56,7 @@
 
         <h2 class="secondaryHead">التوسعات (extensions)</h2>
         <p class="paragraph">
-            احد ميزات OpenGL الرائعة هي دعمه للتوسعات. كلما تجد شركة غرافيكس تقنية جديدة او تحسين في اداء الرسم عادة توجد في <def>توسع</def> في برامج تشغيل كرت الشاشة. اذا كانت الhardware التي يعمل عليها البرنامج تدعم توسع كهذا فان المطور يستطيع استعمال العمليات المتوفرة بواسطة التوسع للحصول على غرافيكس كفؤ او متقدم اكثر. بهذه الطريقة، مطور الغرافيكس يستطيع استعمال طرق الرسم الجديدة بدون ان ينتظر لOpenGL بان يضيف العمليات هذه في اصدارات قادمة، ببساطة بأن يتأكد ان كان التوسع مدعوما بواسطة كرت الشاشة. غالبا، عندما يكون توسع مشهورا او مفيدا جدا سيكون جزء من اصدارات OpenGL القادمة.
+            احد ميزات OpenGL الرائعة هي دعمه للتوسعات. كلما تجد شركة غرافيكس تقنية جديدة او تحسين في اداء الرسم عادة توجد في <def>توسع</def> في برامج تشغيل كرت الشاشة. اذا كانت الhardware التي يعمل عليها البرنامج تدعم توسع كهذا فإن المطور يستطيع استعمال العمليات المتوفرة بواسطة التوسع للحصول على غرافيكس كفؤ او متقدم اكثر. بهذه الطريقة، مطور الغرافيكس يستطيع استعمال طرق الرسم الجديدة بدون ان ينتظر لOpenGL بان يضيف العمليات هذه في اصدارات قادمة، ببساطة بأن يتأكد ان كان التوسع مدعوما بواسطة كرت الشاشة. غالبا، عندما يكون توسع مشهورا او مفيدا جدا سيكون جزء من اصدارات OpenGL القادمة.
             <br><br>
             على المطور أن يتحقق اذا كان اي من هذه التوسعات متوفرا قبل استعمالها (او أن يستعمل مكتبة لتوسعات OpenGL). هذا يسمح للمطور بفعل الاشياء بشكل افضل او اكثر كفاءة، اعتمادا على اذا كان التوسع متوفرا ام لا:
         </p>
@@ -68,16 +72,17 @@
         
             color: rgb(195, 195, 195);
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
-    if(GL_ARB_extension_name)
+    if (GL_ARB_extension_name)
     {
         // فعل اشياء جديدة و حديثة مدعومة بواسطة الجهاز
     }
     else
     {
         // إمتداد غير مدعوم: فعلها بالطريقة القديمة
-    }</code>
+    }
+</code>
         </pre>
-        <p class="paragraph">مع OpenGL الاصدار 3.3 نادرا ما نحتاج توسع لأغلب التقنيات، لكن حيثما تكون مهمة سيتم توفير الارشادات المناسبة.</p>
+        <p class="paragraph">مع OpenGL الاصدار 3.3 نادرا ما نحتاج توسع لأغلب التقنيات، لكن حيثما تكون مهمة سيتم توفير الإرشادات المناسبة.</p>
 
         <h2 class="secondaryHead">تسلسل حالات</h2>
         <P class="paragraph">
@@ -106,11 +111,13 @@
         
             color: rgb(195, 195, 195);
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
-    struct object_name {
+    struct object_name
+    {
         float  option1;
         int    option2;
         char[] name;
-    };</code>
+    };
+</code>
         </pre>
         <p class="paragraph">عندما نريد استعمال الobjects عادة ما تكون مشابهة لهذا (مع سياق OpenGL بشكل struct كبير):</p>
         <pre>
@@ -126,11 +133,13 @@
             color: rgb(195, 195, 195);
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
     // OpenGL حالة
-    struct OpenGL_Context {
+    struct OpenGL_Context
+    {
         ...
         object_name* object_Window_Target;
         ...  	
-    };</code>
+    };
+</code>
         </pre>
         <pre>
             <code class="language-cpp" style=
@@ -153,7 +162,8 @@
     glSetObjectOption(GL_WINDOW_TARGET, GL_OPTION_WINDOW_WIDTH,  800);
     glSetObjectOption(GL_WINDOW_TARGET, GL_OPTION_WINDOW_HEIGHT, 600);
     // تعديل هدف السياق الى الاصل (الغاء الربط)
-    glBindObject(GL_WINDOW_TARGET, 0);</code>
+    glBindObject(GL_WINDOW_TARGET, 0);
+</code>
         </pre>
         <p class="paragraph">قطعة الكود الصغيرة هذه هي طريقة سير البرنامج و ستراها بتكرار عند العمل مع OpenGL. نحن اولا ننشئ object و نحفظ مرجعا له كتعريف (ID) (بيانات الobject الحقيقية مخزنة وراء الكواليس). بعدها نربط الobject (باستعمال الID الخاص به) بموقع الهدف للسياق (موقع نافذة المثال معرف باسم <var>GL_WINDOW_TARGET</var>). بعدها نعدل خيارات النافذة و اخيرا نلغي ربط الobject بتعديل id الobject الحالي لهدف النافذة الى 0. الخيارات التي عدلناها محفوظة في الobject المشار اليه من قبل <var>objectId</var> و سيرجع حالما نربط الobject مرة اخرى ب<var>GL_WINDOW_TARGET</var></p>
         <warning><p class="paragraph">عينات الكود هذه هي مجرد تشبيه عن كيفية عمل Opengl؛ في هذا الكتاب سوف تمر على امثلة حقيقية كثيرة</p></warning>
@@ -167,7 +177,7 @@
         <li class="paragraph"><a href="http://www.opengl.org/registry">سجل OpenGL</a>: كل تخصيصات OpenGL و التوسعات لكل اصدارات OpenGL.</li>
         
         <footer>
-            <button class="nextPageButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/hello-window')">الصفحة القادمة</button>
+            <button class="nextPageButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/creating-a-window')">الصفحة القادمة</button>
         </footer>
     </div>
 

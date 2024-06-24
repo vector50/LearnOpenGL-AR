@@ -8,189 +8,194 @@
     <title>LearnOpenGL</title>
     <link rel="stylesheet" href="../../global/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/vs2015.min.css">
+    <style>
+        img { margin-inline: auto; }
+        @media screen and (max-width: 500px) and (min-width: 50px) { img { width: 95%; } }
+    </style>
 </head>
 
 <body>
-    <div class="pageChooseDiv">
-        <button class="pageChooseButton" onclick="newTab('//github.com/JoeyDeVries/LearnOpenGL')">GitHub</button>
-        <button class="pageChooseButton" onclick="switchBg()">تغيير الخلفية</button>
-        <button class="pageChooseButton" onclick="redirect('//vector50.github.io/LearnOpenGL-AR/land')">الصفحة الرئيسية</button>
-        <button class="pageChooseButton" onclick="redirect('//vector50.github.io/LearnOpenGL-AR/intro')">المقدمة</button>
-        <button class="pageChooseButton" onclick="openCloseMenu('gettingStarted')">البداية 🢓</button>
-        <button class="secondaryPageChooseButton" id="gettingStarted>opengl" style="display: block;" onclick="redirect('//vector50.github.io/LearnOpenGL-AR/getting-started/opengl')">OpenGL</button>
-    </div>
+    <header>
+        <button class="pageChooseButton" onclick="newTab('github.com/JoeyDeVries/LearnOpenGL')">GitHub</button>
+        <button class="pageChooseButton" onclick="switchBg()"><strong>تغيير الخلفية</strong></button>
+        <button class="pageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/land')"><strong>الصفحة الرئيسية</strong></button>
+        <button class="pageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/intro')"><strong>المقدمة</strong></button>
+        <button class="pageChooseButton" style="border-color: rgb(100, 184, 187);" id="button-gettingStarted" onclick="openCloseMenu('gettingStarted')"><strong>البداية</strong></button>
+    </header>
+    <underHeader id="underHeader-gettingStarted" style="display: inline;">
+        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/opengl')">OpenGL</button>
+        <button class="secondaryPageChooseButton" style="border-color: rgb(100, 184, 187);" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/creating-a-window')">إنشاء نافذة</button>
+        <button class="secondaryPageChooseButton" onclick="redirect('vector50.github.io/learnopengl-ar/getting-started/hello-window')">النافذة البدائية</button>
+    </underHeader>
 
     <div class="mainDiv">
         <h1 class="mainHead">انشاء نافذة</h1>
         <p class="paragraph">
-            
+            أول شيئ يجب علينا فعله قبل ان نصنع غرافيكس مذهلة هو إنشاء سياق لOpenGL و نافذة للبرنامج للرسم فيها. ولكن، هذه العمليات تكون محددة لكل نظام تشغيل و OpenGL يحاول ابعاد نفسه عن هذه العمليات عمداً. هذا يعني اننا يجب أن ننشئ نافذة، و أن نعرف سياق، و أن ندير إدخال المستخدم كلها لوحدنا.
             <br><br>
-
+            لحسن الحظ، توجد العديد من المكاتب التي توفر العمليات التي نبحث عنها، بعضها تهدف لOpenGL. هذه المكاتب توفر علينا العمل المحدد لكل نظام تشغيل و تعطينا نافذة و سياق لOpenGL للرسم فيه. بعض من المكاتب المعروفة هي SFML ،SDL ،GLUT و GLFW. في LearnOpenGL سنستعمل GLFW. لك الحرية بإختيار اي مكتبة أُخرى، فإن تهيئة أغلب هذه المكاتب مشابه لتهيئة GLFW.
         </p>
         
         <h2 class="secondaryHead">GLFW</h2>
         <p class="paragraph">
-            
+            GLFW هي مكتبة، مكتوبة بC، تهدف خصيصاً لOpenGL. GLFW تعطينا الاحتياجات الأساسية المطلوبة للرسم على الشاشة. إنها تسمح لنا بإنشاء سياق لOpenGL، تحديد خواص النافذة، و إدارة إدخال المستخدم، و هذا كافي بشكل كبير لما نريد فعله.
             <br><br>
-
+            هدف هذا الفصل و الفصل الذي بعده هو تشغيل GLFW، التأكد من انها تنشئ سياق OpenGL بشكل صحيح و أنها تُظهر نافذة بسيطة. هذا الفصل يشرح خطوة بخطوة كيف تحصل على، تبني و تربط مكتبة GLFW. سوف نستعمل بيئة التطوير Microsoft Visual Studio 2019. اذا لم تكن تستعمله (أو اذا كنت تستعمل نسخة أقدم أو أحدث) فلا تقلق، العملية ستكون مشابهة على أغلب بيئات التطوير الأُخرى.
         </p>
 
         <h2 class="secondaryHead">بناء GLFW</h2>
-        <p class="paragraph"></p>
-        <warning><p class="paragraph"></p></warning>
-        <p class="paragraph"></p>
-        <li class="paragraph"></li>
-        <li class="paragraph"></li>
-        <p class="paragraph"></p>
+        <p class="paragraph">تستطيع الحصول على GLFW من <a href="https://www.glfw.org/download.html">صفحة التحميل</a> على موقعهم. توجد نسخ مبنية مسبقاً من GLFW و ملفات رأسية (headers) لVisual Studio 2012 صعوداً الى 2019، ولكن لكي يكون عملنا كاملاً سوف نبني GLFW من الكود. هذا سيعطيك شعوراً عن عملية بناء المكاتب مفتوحة المصدر بنفسك لأنه ليست كل المكاتب لديها الملفات المبنية مسبقاً. لذا فلنُحمل حزمة الكود.</p>
+        <warning><p class="paragraph">
+            سوف نبني كل المكاتب بناء 64-bit لذا احرص على الحصول على ملفات 64-bit اذا كنت تستعمل الملفات المبنية مسبقاً.
+            <br>
+            و إبني\حمل مكاتب 32-bit إذا كان حاسوبك 32-bit.
+            <br><br>
+            شخصياً (المترجم) أقترح تحميل الملفات المبنية مسبقاً لأن العملية أسرع، إلا إذا أردت أن تتعلم كيفية بناء المكاتب مفتوحة المصدر التي ليس لها نسخ مبنية مسبقاً، أو في حال عدم توفر ملفات مبنية مسبقاً أصلاً.
+        </p></warning>
+        <p class="paragraph">بعدما حملت حزمة الكود، أخرجه و افتح محتواه. نحن نحتاج بعض الاشياء فقط:</p>
+        <li class="paragraph">المكتبة الناتجة من البناء (compilation).</li>
+        <li class="paragraph">مجلد ال<strong>include</strong>.</li>
+        <p class="paragraph">بناء المكتبة من الكود يضمن بأن المكتبة الناتجة مصممة بشكل مضبوط للCPU\نظام التشغيل الخاص بك، رفاهية المكاتب المبنية مسبقاً لا توفرها دائماً (احياناً، الملفات المبنية مسبقاً غير متوفرة لنظامك). مشكلة توفير كود للعالم هي أن ليس كل شخص يستعمل بيئة التطوير نفسها او نظام البناء لبرنامجه، مما يعني أن ملفات المشروع المتوفرة قد لا تكون متوافقة مع ترتيب الناس الآخرين. لذا يجب على الناس تجهيز المشروع الخاص بهم مع ملفات الكود المعطية، و هذا شيئ مرهق. تحديداً لهذه الأسباب توجد اداة تسمى CMake.</p>
 
         <h2 class="thirdHead">CMake</h2>
         <p class="paragraph">
-            
+            CMake هي أداة تستطيع انشاء ملفات مشروع بإختيار المستخدم (مثلاً Eclipse ،Code::Blocks ،Visual Studio) من مجموعة من ملفات الكود بإستعمال نصوص CMake معرفة مسبقاً. هذا يسمح لنا بإنشاء ملف مشروع Visual Studio 2019 من حزمة كود GLFW الذي نستطيع استعماله لبناء المكتبة. أولاً يجب علينا تحميل و تثبيت CMake الذي تستطيع تحميله من صفحة <a href="http://www.cmake.org/cmake/resources/software.html">التحميل</a>.
             <br><br>
-            
+            بعد تثبيت CMake تستطيع أن تختار بأن تشغل CMake بإستعمال الأوامر أو من خلال واجهة المستخدم. بما اننا لا نريد تعقيد الأُمور سوف نستعمل واجهة المستخدم. CMake يتطلب مجلد الكود و مجلد الهدف للملفات المبنية. لمجلد الكود سوف نختار المجلد الأساسي لحزمة GLFW و لمجلد البناء سوف ننشئ مجلداً جديداً و نختاره.
         </p>
-        <img src="" alt="">
-        <p class="paragraph"></p>
+        <img src="../../global/media/getting-started/cmake.png" alt="صورة لشعار CMake" style="width: 85%;">
+        <p class="paragraph">بعدما جُهزت مجلدات المصدر و الهدف، إضغط على زر <strong>Configure</strong> لكي يستطيع CMake قراءة الإعدادات المطلوبة و الكود. بعدها يجب علينا اختيار المولد للمشروع و بما أننا نستعمل Visual Studio 2019 سنختار خيار <strong>Visual Studio 16</strong> (Visual Studio 2019 معروف ايضاً بVisual Studio 16). CMake بعدها سيُظهر خيارات البناء المتوفرة لإعداد المكتبة الناتجة. نستطيع تركها كالقيم الأساسية و الضغط على <strong>Configure</strong> مرة أُخرى لحفظ الإعدادات. بعد تجهيز الإعدادات، سوف نضغط <strong>Generate</strong> و ملفات المشروع الناتجة سوف تُنشأ في مجلد البناء.</p>
 
         <h2 class="thirdHead">تحويل الكود الى لغة الحاسوب (Compilation)</h2>
         <p class="paragraph">
-            
+            في مجلد البناء يوجد ملف اسمه <strong>GLFW.sln</strong> سوف نفتحه في Visual Studio 2019. بما أن CMake أنشأ ملف مشروع يحتوي الإعدادات المناسبة يجب علينا فقط بناء الsolution. من المفترض أن CMake أعد الsolution اوتوماتيكياً لأن يبني مكتبة 64-bit؛ الآن اضغط build solution. هذا سيعطينا ملف مكتبة مبني تستطيع إيجاده في <strong>build/src/Debug</strong> يإسم <strong>glfw3.lib</strong>.
             <br><br>
-            
+            بعدما ولدنا المكتبة يجب أن نتأكد من أن بيئة التطوير تعرف أين تجد المكتبة و الملفات الرأسية لبرنامجنا. توجد طريقتين شائعة لفعل هذا:
         </p>
-        <li class="paragraph"></li>
-        <li class="paragraph"></li>
-        <p class="paragraph"></p>
+        <ol>
+            <li class="paragraph">نجد مجلدات ال<strong>/lib</strong> و <strong>/include</strong> الخاصة ببيئة التطوير او الcompiler  و نضيف مجلد ال<strong>include</strong> الخاص بGLFW الى مجلد ال<strong>/include</strong> لبيئة التطوير و بشكل مشابه نضيف <strong>glfw3.lib</strong> الى مجلد ال<strong>/lib </strong> لبيئة التطوير. هذا يعمل، لكنه ليس الطريقة المُستحسنة. فتكون متابعة ملفات المكتبة و الinclude  صعبة  و تحميل جديد لبيئة التطوير او الcompiler ينتج عنه الحاجة لإعادة هذه العملية كلها.</li>
+            <li class="paragraph">طريقة أُخرى (و مقترحة) هي إنشاء مجموعة مجلدات في موقع من اختيارك تحوي كل الملفات الرأسية\المكاتب الذي تستطيع الاشارة اليها من بيئة التطوير\الcompiler الخاص بك. تستطيع، مثلاً، أن تنشئ مجلداً يحوي مجلد <strong>Libs</strong> و مجلد <strong>Include</strong> تخزن فيه كل ملفات المكاتب و الملفات الرأسية بشكل منفصل. الآن كل المكاتب منظمة في مكان واحد (يمكن مشاركته بين اكثر من حاسوب). ولكن، المطلوب هو أنه لكل مرة ننشئ مشروعاً جديداً يجب أن نقول لبيئة التطوير أين تجد هذه المجلدات.</li>
+        </ol>
+        <p class="paragraph">بعد تخزين الملفات المطلوبة في موقع من اختيارك، نستطيع الابتداء بإنشاء اول مشروع GLFW OpenGL خاص بنا.</p>
 
         <h2 class="secondaryHead">مشروعنا الأول</h2>
-        <p class="paragraph"></p>
-        <img src="" alt="">
-        <p class="paragraph"></p>
+        <p class="paragraph">اولاً، لنفتح Visual Studio و ننشئ مشروعاً جديداً. إختر C++ اذا أُعطيت عدة خيارات و إختر <strong>Empty Project</strong> (لا تنسَ تسمية مشروعك إسماً مناسباً). بما أننا سوف نفعل كل شيئ ب64-bit سنغير إعدادات المشروع في القائمة في الأعلى قرب Debug من x86 الى x64 (اذا كان حاسوبك 32-bit فإختر x86):</p>
+        <img src="../../global/media/getting-started/x64.png" alt="صورة عن كيفية التحويل من x86 الى x64" style="width: 45%;">
+        <p class="paragraph">بعد إنهاء هذا، الآن لدينا مساحة عمل لإنشاء أول برنامج OpenGL خاص بنا!</p>
         
         <h2 class="secondaryHead">ربط المكتبة (linking)</h2>
         <p class="paragraph">
-            
+            لكي يستطيع المشروع استعمال GLFW يجب علينا <def>ربط</def> المكتبة بمشروعنا. يتم هذا بتحديد اننا نريد استعمال <strong>glfw3.lib</strong> في اعدادات الربط (الlinker)، لكن مشروعنا لا يعلم أين يجد <strong>glfw3.lib</strong> لأننا نخزن المكاتب في مجلد آخر. لهذا يجب ان نضيف موقع المجلد الى المشروع أولاً.
             <br><br>
-            
+            نستطيع إخبار بيئة التطوير بأن تأخذ موقع المجلد بعين الاعتبار عندما تحتاج للبحث عن ملفات المكاتب و الملفات الرأسية. اضغط بالزر الأيمن على إسم المشروع في الsolution explorer بعدها اذهب الى <strong>VC++ Directories</strong> كما في الصورة التالية:
         </p>
-        <img src="" alt="">
-        <p class="paragraph"></p>
-        <img src="" alt="">
+        <img src="../../global/media/getting-started/vc_directories.png" alt="صورة لإعداد VC++ Directories في Visual Studio" style="width: 65%;">
+        <p class="paragraph">من هنا فصاعداً تستطيع إضافة مواقع المجلدات الخاصة بك لكي يعرف المشروع أين يجب أن يبحث. يمكن فعل هذا بواسطة ادخال النص يدوياً أو الضغط على المكان المناسب للنص و اختيار الخيار <strong>&lt;Edit..&gt;</strong>. افعل هذا لمجلدات المكاتب و مجلدات الinclude:</p>
+        <img src="../../global/media/getting-started/include_directories.png" alt="صورة لإعداد Include Directories في Visual Studio" style="width: 65%;">
         <p class="paragraph">
-            
+            هنا تستطيع اضافة اي كمية من المجلدات تريد و بيئة التطوير سوف تبحث في هذه المجلدات عندما تبحث عن مكتبة او ملف رأسي. بعد ضم مجلد ال<strong>Include</strong> لGLFW، سوف تستطيع إيجاد كل الملفات الرأسية لGLFW بواسطة ضم <strong>&lt;GLFW/..&gt;</strong>. نفس الشيء ينطبق على مجلدات المكاتب.
             <br><br>
-            
+            بما أن بيئة التطوير VS تستطيع إيجاد كل الملفات المطلوبة نستطيع أخيراً ربط GLFW بالمشروع بالذهاب الى تبويب <strong>Linker</strong> ثم <strong>Input</strong>:
         </p>
-        <img src="" alt="">
-        <p class="paragraph"></p>
+        <img src="../../global/media/getting-started/linker_input.png" alt="صورة لإعداد ربط المكاتب في Visual Studio" style="width: 65%;">
+        <p class="paragraph">لتربط مكتبة يجب أن تحدد اسمها للرابط (linker). بما أن اسم المكتبة <strong>glfw3.lib</strong>، سنضيف هذا الاسم الى حقل الاحتياجات الإضافية <strong>Additional Dependencies</strong> (اما يدوياً او بإستعمال خيار <strong>&lt;Edit..&gt;</strong>) و من هنا فصاعداً GLFW سيكون مربوطاً عندما نبني البرنامج. بالإضافة الى GLFW يجب علينا أيضاً اضافة ربط لمكتبة OpenGL، لكن هذا قد يختلف حسب كل نظام تشغيل:</p>
 
         <h2 class="thirdHead">مكتبة OpenGL على Windows</h2>
-        <p class="paragraph"></p>
+        <p class="paragraph">اذا كنت تستعمل Windows فإن مكتبة <strong>opengl32.lib</strong> OpenGL تأتي مع عدة تطوير برامج (SDK) Microsoft، و هي مثبتة من الأساس عندما تثبت Visual Studio. بما أن هذا الفصل يستعمل الcompiler الخاص بVS و هو على Windows فسوف نضيف <strong>opengl32.lib</strong> الى اعدادات الربط. لاحظ أن نسخة ال64-bit من OpenGL تسمى <strong>opengl32.lib</strong>، كما نسخة ال32-bit، و هذا اسم مؤسف بعض الشيء.</p>
         <h2 class="thirdHead">مكتبة OpenGL على Linux</h2>
         <p class="paragraph">
-            
+            على أنظمة Linux يجب أن تربط مكتبة <strong>libGL.so</strong> بواسطة اضافة <strong>-lGL</strong> الى اعدادات الربط. اذا لم تستطع إيجاد المكتبة فعلى الأغلب تحتاج تثبيت أحد حزم NVidia ،Mesa أو AMD.
             <br><br>
-            
+            الآن، بعدما أضفت مكاتب GLFW و OpenGL الى إعدادات الربط يجب أن تضم الملفات الرأسية لGLFW كالتالي:
         </p>
         <pre>
-            <code id="code1" class="language-cpp" style=
+            <code class="language-cpp" style=
             "
             direction: ltr;
             display: block;
             background: #282B2E;
-            margin-top: -35px;
-            margin-bottom: -70px;
             border-radius: 7px;
             border: 3px solid #bbb;
             font-size: 15px;
         
             color: rgb(195, 195, 195);
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
-            </code>
+    #include &lt;GLFW/glfw3.h&gt;
+</code>
         </pre>
-        <note><p class="paragraph"></p></note>
-        <p class="paragraph"></p>
+        <note><p class="paragraph">لمستخدمي Linux الذين يستعملون GCC لبناء الكود، خيارات الأمر التالية قد تساعدك في بناء المشروع: <strong>-lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl</strong>. عدم ربط المكاتب هذه بشكل صحيح سيولد <em>undefined reference</em> errors.</p></note>
+        <p class="paragraph">بهذا ينتهي تجهيز و إعداد GLFW.</p>
 
         <h2 class="secondaryHead">GLAD</h2>
-        <p class="paragraph"></p>
+        <p class="paragraph">ما زلنا لم ننتهي بعد، لوجود شيء آخر يجب علينا القيام به. نظراً لأن OpenGL ليس سوى معيار/تخصيص، فإن الأمر متروك للشركة المصنعة لبرنامج تشغيل كرت الشاشة لتطبيق التخصيص على برنامج التشغيل الذي يدعمه كرت الشاشة المحدد. و لأنه توجد العديد من الإصدارات المختلفة من برامج تشغيل OpenGL، موقع معظم الfunctions له غير معروف في وقت بناء البرنامج و يجب الاستعلام عنها في وقت عمل البرنامج (run-time). و من ثم تكون مهمة المطور استرداد موقع الfunctions التي يحتاجها وتخزينها في function pointers لإستخدامها لاحقًا. استرداد هذه المواقع يكون <a href="https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions">مختلفاً لكل نظام تشغيل</a>. على Windows يبدو الأمر كالتالي:</p>
         <pre>
-            <code id="code1" class="language-cpp" style=
+            <code class="language-cpp" style=
             "
             direction: ltr;
             display: block;
             background: #282B2E;
-            margin-top: -35px;
-            margin-bottom: -70px;
             border-radius: 7px;
             border: 3px solid #bbb;
             font-size: 15px;
         
             color: rgb(195, 195, 195);
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
-    // define the function's prototype
+    // functionتعريف نموذج ال
     typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
-    // find the function and assign it to a function pointer
+    // function pointer ثم تعيينه الى functionإيجاد ال
     GL_GENBUFFERS glGenBuffers  = (GL_GENBUFFERS)wglGetProcAddress("glGenBuffers");
-    // function can now be called as normal
+    // الآن بشكل اعتيادي functionيمكن استدعاء ال
     unsigned int buffer;
-    glGenBuffers(1, &buffer);</code>
+    glGenBuffers(1, &buffer);
+</code>
         </pre>
-        <p class="paragraph"></p>
+        <p class="paragraph">كما ترون يبدو الكود معقداً و هي عملية مرهقة للقيام بهذا لكل function قد تحتاجه والذي هو ليس مُعرفاً بعد. لحسن الحظ، هناك مكتبات لهذا الغرض أيضاً مثل <strong>GLAD</strong> و هي مكتبة مشهورة و حديثة.</p>
 
         <h2 class="thirdHead">تجهيز GLAD</h2>
         <p class="paragraph">
-            
+            GLAD هي مكتبة <a href="https://github.com/Dav1dde/glad">مفتوحة المصدر</a> تدير كل تلك الأعمال المرهقة التي تحدثنا عنها. لGLAD طريقة إعداد مختلفة قليلاً عن معظم المكتبات مفتوحة المصدر. يستخدم GLAD <a href="https://glad.dav1d.de/">خدمة ويب</a> حيث يمكننا إخبار GLAD بإصدار OpenGL الذي نريده و نحمل كل الfunctions لOpenGL وفقاً لهذا الإصدار.
             <br><br>
-            
+            انتقل إلى <a href="https://glad.dav1d.de/">خدمة ويب</a> GLAD، وتأكد من ضبط اللغة على ++C، وفي قسم API حدد إصدار OpenGL على الأقل 3.3 (وهو ما سنستخدمه؛ والإصدارات الأعلى جيدة أيضاً). تأكد أيضًا من أن الprofile محدد على <em>Core</em> و خيار <em>Generate a loader</em> صحيح. تجاهل الامتدادات (extensions) (في الوقت الحالي) و اضغط على <em>Generate</em> لإنتاج ملفات المكتبة الناتجة.
         </p>
-        <warning><p class="paragraph"></p></warning>
+        <warning><p class="paragraph">تأكد من استخدام إصدار GLAD1 من: <a href="https://glad.dav1d.de/">https://glad.dav1d.de/</a> كما في أعلاه. هناك أيضًا إصدار GLAD2 لكنه لن يتم بناء البرنامج بإستعماله هنا.</p></warning>
         <p class="paragraph">
-            
+            من المفترض أن GLAD قد وفر لك الآن ملفًا مضغوطًا يحتوي على مجلدي include و ملف <strong>glad.c</strong> واحد. انسخ كلا المجلدين (<strong>glad</strong> و <strong>KHR</strong>) إلى مجلد الinclude الخاص بك (أو أضف عنصراً إضافياً يشير إلى هذه المجلدات)، وأضف ملف <strong>glad.c</strong> إلى مشروعك.
             <br><br>
-            
+            بعد الخطوات السابقة، يجب أن تكون قادراً على إضافة أمر الinclude التالي أعلى ملفك:
         </p>
         <pre>
-            <code id="code2" class="language-cpp" style=
+            <code class="language-cpp" style=
             "
             direction: ltr;
             display: block;
             background: #282B2E;
-            margin-top: -35px;
-            margin-bottom: -70px;
             border-radius: 7px;
             border: 3px solid #bbb;
             font-size: 15px;
         
             color: rgb(195, 195, 195);
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
-    // define the function's prototype
-    typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
-    // find the function and assign it to a function pointer
-    GL_GENBUFFERS glGenBuffers  = (GL_GENBUFFERS)wglGetProcAddress("glGenBuffers");
-    // function can now be called as normal
-    unsigned int buffer;
-    glGenBuffers(1, &buffer);</code>
+    #include &lt;glad/glad.h&gt;
+</code>
         </pre>
-        <p class="paragraph"></p>
+        <p class="paragraph">محاولة بناء البرنامج لا ينبغي أن تعطيك أي errors، وعند هذه النقطة نحن مستعدين للانتقال إلى <a href="https://vector50.github.io/learnopengl-ar/getting-started/hello-window">الفصل التالي</a> حيث سنناقش كيف يمكننا بالفعل استخدام GLFW و GLAD لتكوين سياق OpenGL و إنشاء نافذة. تأكد من أن تتحقق من أن كل مواقع مجلدات المكاتب و الملفات الرأسية صحيحة و أن أسماء المكاتب في اعدادات الربط تتطابق مع المكاتب المطلوبة.</p>
 
         <h2 class="secondaryHead">مصادر اضافية</h2>
-        <li class="paragraph" style="margin-top: 15px;"></li>
-        <li class="paragraph"></li>
-        <li class="paragraph"></li>
-        <li class="paragraph"></li>
-        <li class="paragraph"></li>
-        <li class="paragraph"></li>
+        <li class="paragraph" style="margin-top: 15px;"><a href="https://www.glfw.org/docs/latest/window_guide.html">GLFW: دليل النوافذ</a>: دليل GLFW الرسمي حول إعداد وتكوين نافذة GLFW.</li>
+        <li class="paragraph"><a href="https://www.opengl-tutorial.org/miscellaneous/building-your-own-c-application/">بناء التطبيقات</a>: يوفر معلومات رائعة حول عملية البناء/الربط لتطبيقك و قائمة كبيرة من الerrors المحتملة (بالإضافة إلى الحلول) التي قد تظهر.</li>
+        <li class="paragraph"><a href="http://wiki.codeblocks.org/index.php?title=Using_GLFW_with_Code::Blocks">GLFW في Code::Blocks</a>: بناء GLFW في بيئة التطوير Code::Blocks.</li>
+        <li class="paragraph"><a href="http://www.cmake.org/runningcmake/">تشغيل CMake</a>: نظرة عامة قصيرة حول كيفية تشغيل CMake على نظامي التشغيل Windows و Linux.</li>
+        <li class="paragraph"><a href="https://learnopengl.com/demo/autotools_tutorial.txt">كتابة نظام بناء في Linux</a>: درس للأدوات التلقائية بواسطة Wouter Verholst حول كيفية كتابة نظام بناء في Linux.</li>
+        <li class="paragraph"><a href="https://github.com/Polytonic/Glitter">Glitter من Polytonic</a>: مشروع نموذجي بسيط يأتي مهيئاً مسبقاً مع جميع المكتبات ذات صلة؛ جيدٌ لك إذا كنت تريد نموذجاً لمشروع دون الحاجة إلى بناء جميع المكتبات بنفسك.</li>
 
         <footer class="footer">
-            <a href="http://learnopengl.com" target="_blank" class="footerElement">LearnOpenGL</a>
-            <a href="http://github.com/vector50" target="_blank" class="footerElement">My GitHub</a>
+            <button class="nextPageButton" onclick="redirect('//vector50.github.io/learnopengl-ar/getting-started/hello-window')">الصفحة القادمة</button>
         </footer>
     </div>
 
     <script>
-        let gettingStarted_ = true;
-        document.getElementById("code1").textContent = "#include <GLFW/glfw3.h>"
-        document.getElementById("code2").textContent = "#include <glad/glad.h>"
+        let openedMenu_ = "gettingStarted"; //the menu that is opened at the moment
+        let currentMenu = "gettingStarted"; //the menu of the webpage that is opened at the moment
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
