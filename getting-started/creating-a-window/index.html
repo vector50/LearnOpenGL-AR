@@ -10,11 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/vs2015.min.css">
     <style>
         img
-        {
-            margin-inline: auto;
-            width: 50%;
-        }
-        @media screen and (max-width: 500px) and (min-width: 50px) { img { width: 95%; }}
+        { margin-inline: auto; }
     </style>
 </head>
 
@@ -200,6 +196,15 @@
     <script>
         let openedMenu_ = "gettingStarted"; //the menu that is opened at the moment
         let currentMenu = "gettingStarted"; //the menu of the webpage that is opened at the moment
+        
+        let winWidth = window.innerWidth;
+        if (winWidth <= 500 && winWidth >= 50)
+        {
+            for (let i = 0; i < document.getElementsByClassName("pageChooseButton").length; i++)
+            {
+                document.getElementsByTagName("img")[i].style.width = "95%";
+            }
+        }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
