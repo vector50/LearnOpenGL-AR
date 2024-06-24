@@ -9,7 +9,12 @@
     <link rel="stylesheet" href="../../global/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/vs2015.min.css">
     <style>
-        img { margin-inline: auto; }
+        img
+        {
+            margin-inline: auto;
+            width: 50%;
+        }
+        @media screen and (max-width: 500px) and (min-width: 50px) { img { width: 95%; }}
     </style>
 </head>
 
@@ -62,8 +67,7 @@
             <br><br>
             بعد تثبيت CMake تستطيع أن تختار بأن تشغل CMake بإستعمال الأوامر أو من خلال واجهة المستخدم. بما اننا لا نريد تعقيد الأُمور سوف نستعمل واجهة المستخدم. CMake يتطلب مجلد الكود و مجلد الهدف للملفات المبنية. لمجلد الكود سوف نختار المجلد الأساسي لحزمة GLFW و لمجلد البناء سوف ننشئ مجلداً جديداً و نختاره.
         </p>
-        <img src="../../global/media/getting-started/cmake.png" alt="صورة لشعار CMake" style="width: 85%;
-        @media screen and (max-width: 500px) and (min-width: 50px) { img { width: 1%; } }">
+        <img src="../../global/media/getting-started/cmake.png" alt="صورة لشعار CMake" style="width: 85%;">
         <p class="paragraph">بعدما جُهزت مجلدات المصدر و الهدف، إضغط على زر <strong>Configure</strong> لكي يستطيع CMake قراءة الإعدادات المطلوبة و الكود. بعدها يجب علينا اختيار المولد للمشروع و بما أننا نستعمل Visual Studio 2019 سنختار خيار <strong>Visual Studio 16</strong> (Visual Studio 2019 معروف ايضاً بVisual Studio 16). CMake بعدها سيُظهر خيارات البناء المتوفرة لإعداد المكتبة الناتجة. نستطيع تركها كالقيم الأساسية و الضغط على <strong>Configure</strong> مرة أُخرى لحفظ الإعدادات. بعد تجهيز الإعدادات، سوف نضغط <strong>Generate</strong> و ملفات المشروع الناتجة سوف تُنشأ في مجلد البناء.</p>
 
         <h2 class="thirdHead">تحويل الكود الى لغة الحاسوب (Compilation)</h2>
@@ -80,8 +84,7 @@
 
         <h2 class="secondaryHead">مشروعنا الأول</h2>
         <p class="paragraph">اولاً، لنفتح Visual Studio و ننشئ مشروعاً جديداً. إختر C++ اذا أُعطيت عدة خيارات و إختر <strong>Empty Project</strong> (لا تنسَ تسمية مشروعك إسماً مناسباً). بما أننا سوف نفعل كل شيئ ب64-bit سنغير إعدادات المشروع في القائمة في الأعلى قرب Debug من x86 الى x64 (اذا كان حاسوبك 32-bit فإختر x86):</p>
-        <img src="../../global/media/getting-started/x64.png" alt="صورة عن كيفية التحويل من x86 الى x64" style="width: 45%;
-        @media screen and (max-width: 500px) and (min-width: 50px) { img { width: 1%; } }">
+        <img src="../../global/media/getting-started/x64.png" alt="صورة عن كيفية التحويل من x86 الى x64" style="width: 45%;">
         <p class="paragraph">بعد إنهاء هذا، الآن لدينا مساحة عمل لإنشاء أول برنامج OpenGL خاص بنا!</p>
         
         <h2 class="secondaryHead">ربط المكتبة (linking)</h2>
@@ -90,18 +93,15 @@
             <br><br>
             نستطيع إخبار بيئة التطوير بأن تأخذ موقع المجلد بعين الاعتبار عندما تحتاج للبحث عن ملفات المكاتب و الملفات الرأسية. اضغط بالزر الأيمن على إسم المشروع في الsolution explorer بعدها اذهب الى <strong>VC++ Directories</strong> كما في الصورة التالية:
         </p>
-        <img src="../../global/media/getting-started/vc_directories.png" alt="صورة لإعداد VC++ Directories في Visual Studio" style="width: 65%;
-        @media screen and (max-width: 500px) and (min-width: 50px) { img { width: 1%; } }">
+        <img src="../../global/media/getting-started/vc_directories.png" alt="صورة لإعداد VC++ Directories في Visual Studio" style="width: 65%;">
         <p class="paragraph">من هنا فصاعداً تستطيع إضافة مواقع المجلدات الخاصة بك لكي يعرف المشروع أين يجب أن يبحث. يمكن فعل هذا بواسطة ادخال النص يدوياً أو الضغط على المكان المناسب للنص و اختيار الخيار <strong>&lt;Edit..&gt;</strong>. افعل هذا لمجلدات المكاتب و مجلدات الinclude:</p>
-        <img src="../../global/media/getting-started/include_directories.png" alt="صورة لإعداد Include Directories في Visual Studio" style="width: 65%;
-        @media screen and (max-width: 500px) and (min-width: 50px) { img { width: 1%; } }">
+        <img src="../../global/media/getting-started/include_directories.png" alt="صورة لإعداد Include Directories في Visual Studio" style="width: 65%;">
         <p class="paragraph">
             هنا تستطيع اضافة اي كمية من المجلدات تريد و بيئة التطوير سوف تبحث في هذه المجلدات عندما تبحث عن مكتبة او ملف رأسي. بعد ضم مجلد ال<strong>Include</strong> لGLFW، سوف تستطيع إيجاد كل الملفات الرأسية لGLFW بواسطة ضم <strong>&lt;GLFW/..&gt;</strong>. نفس الشيء ينطبق على مجلدات المكاتب.
             <br><br>
             بما أن بيئة التطوير VS تستطيع إيجاد كل الملفات المطلوبة نستطيع أخيراً ربط GLFW بالمشروع بالذهاب الى تبويب <strong>Linker</strong> ثم <strong>Input</strong>:
         </p>
-        <img src="../../global/media/getting-started/linker_input.png" alt="صورة لإعداد ربط المكاتب في Visual Studio" style="width: 65%;
-        @media screen and (max-width: 500px) and (min-width: 50px) { img { width: 1%; } }">
+        <img src="../../global/media/getting-started/linker_input.png" alt="صورة لإعداد ربط المكاتب في Visual Studio" style="width: 65%;">
         <p class="paragraph">لتربط مكتبة يجب أن تحدد اسمها للرابط (linker). بما أن اسم المكتبة <strong>glfw3.lib</strong>، سنضيف هذا الاسم الى حقل الاحتياجات الإضافية <strong>Additional Dependencies</strong> (اما يدوياً او بإستعمال خيار <strong>&lt;Edit..&gt;</strong>) و من هنا فصاعداً GLFW سيكون مربوطاً عندما نبني البرنامج. بالإضافة الى GLFW يجب علينا أيضاً اضافة ربط لمكتبة OpenGL، لكن هذا قد يختلف حسب كل نظام تشغيل:</p>
 
         <h2 class="thirdHead">مكتبة OpenGL على Windows</h2>
