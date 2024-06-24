@@ -341,7 +341,6 @@
         // أوامر الرسم هنا
         ...
 
-        // check and call events and swap the buffers
         // buffersالخاص بها و اقلب ال functionتحقق من الأحداث و استدعي ال
         glfwPollEvents();
         glfwSwapBuffers(window);
@@ -382,6 +381,7 @@
     <script>
         let openedMenu_ = "gettingStarted"; //the menu that is opened at the moment
         let currentMenu = "gettingStarted"; //the menu of the webpage that is opened at the moment
+        
         let winWidth = window.innerWidth;
         if (winWidth <= 500 && winWidth >= 50)
         {
